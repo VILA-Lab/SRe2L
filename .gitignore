@@ -1,0 +1,6 @@
+syn_data/
+*cache*/
+*.tar
+*.pth
+*.tar.gz
+wandb/
