@@ -1,6 +1,9 @@
 # SRe2L
 
-Official PyTorch implementation of paper [__"*Squeeze*, *Recover* and *Relabel*: Dataset Condensation at ImageNet Scale From A New Perspective"__](https://arxiv.org/abs/2306.13092), [Zeyuan Yin](https://zeyuanyin.github.io),     [Eric Xing](http://www.cs.cmu.edu/~epxing/), and     [Zhiqiang Shen](http://zhiqiangshen.com/).
+Official PyTorch implementation of paper:
+>[__"*Squeeze*, *Recover* and *Relabel*: Dataset Condensation at ImageNet Scale From A New Perspective"__](https://arxiv.org/abs/2306.13092)<br>
+>[Zeyuan Yin](https://zeyuanyin.github.io), [Eric Xing](http://www.cs.cmu.edu/~epxing/), [Zhiqiang Shen](http://zhiqiangshen.com/)<br>
+>MBZUAI, CMU
 
 [`[Project Page]`](https://zeyuanyin.github.io/projects/SRe2L/)  [`[Paper]`](https://arxiv.org/abs/2306.13092)
 
@@ -19,6 +22,9 @@ We present a new dataset condensation framework termed *<b>S</b>queeze* (<img wi
 <img style="width:70%" src="https://github.com/zeyuanyin/Public-Large-Files/releases/download/SRe2L/syn_img_gif.gif">
 </div>
 
+******************************
+Kindly wait a few seconds for the animation visualizations to load.
+******************************
 
 ## Distilled ImageNet
 
@@ -59,16 +65,20 @@ sh train.sh
 
 ## Download
 
-You can download distilled data and soft labels from https://zeyuanyin.github.io/projects/SRe2L/#Download
+You can download distilled data and soft labels from https://zeyuanyin.github.io/projects/SRe2L/#Download.
 
 ## Results
 
-<div align=left>
+Our Top-1 accuracy (%) under different IPC settings on Tiny-ImageNet and ImageNet-1K datasets:
+
+<div align=center>
 <img style="width:50%" src="./img/results.png">
 </div>
 
 
 ## Citation
+
+If you find our code useful for your research, please cite our paper.
 
 ```
 @article{yin2023squeeze,
