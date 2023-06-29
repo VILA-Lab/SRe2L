@@ -6,7 +6,7 @@
 - PyTorch >= 2.0.0
 - Torchvision >= 0.15.1
 
-## Training
+## Soft Labels Generation
 
 To relabel distilled data, run `relabel.sh` with the desired arguments.
 
@@ -26,6 +26,14 @@ python generate_soft_label.py \
     --mix-type 'cutmix' \
     --data ../recover/syn_data/rn18_bn0.01_[4K]_x_l2_x_tv.crop
 ```
+
+## Make FKD Compatible with Mixup and CutMix
+
+We modify the [`FKD`](https://github.com/szq0214/FKD) code to make it compatible with `mixup` and `cutmix`. In details, `Crop Coords` in `RandomResizedCrop` operation, `Flip Status` in `RandomHorizontalFlip` operation, and `Mixup index, ratio, bbox` in `Mixup/CutMix` augmentation, and soft label are saved in `FKD` file. The saved configuration will be loaded in [training on relabeled data ](../train).
+
+<div align=left>
+<img style="width:70%" src="../img/fkd-mix.png">
+</div>
 
 ## Usage
 

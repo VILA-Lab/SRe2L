@@ -7,7 +7,7 @@
 - Torchvision >= 0.15.1
 
 
-## Training
+## Distilled Data Generation
 
 To recover knowledge from a pre-trained model and synthersize distilled data, run `recover.sh` with the desired arguments.
 
