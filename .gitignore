@@ -4,3 +4,4 @@ syn_data/
 *.pth
 *.tar.gz
 wandb/
+train_ciai*

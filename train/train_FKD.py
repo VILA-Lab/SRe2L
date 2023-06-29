@@ -225,7 +225,14 @@ def train(model, args, epoch=None):
         optimizer.zero_grad()
         assert args.batch_size % args.gradient_accumulation_steps == 0
         small_bs = args.batch_size // args.gradient_accumulation_steps
-        for accum_id in range(args.gradient_accumulation_steps):
+
+        # images.shape[0] is not equal to args.batch_size in the last batch, usually
+        if batch_idx == len(args.train_loader) - 1:
+            accum_step = math.ceil(images.shape[0] / small_bs)
+        else:
+            accum_step = args.gradient_accumulation_steps
+
+        for accum_id in range(accum_step):
             partial_images = images[accum_id * small_bs: (accum_id + 1) * small_bs]
             partial_target = target[accum_id * small_bs: (accum_id + 1) * small_bs]
             partial_soft_label = soft_label[accum_id * small_bs: (accum_id + 1) * small_bs]
