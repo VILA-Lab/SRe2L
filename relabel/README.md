@@ -29,7 +29,7 @@ python generate_soft_label.py \
 
 ## Make FKD Compatible with Mixup and CutMix
 
-We modify the [`FKD`](https://github.com/szq0214/FKD) code to make it compatible with `mixup` and `cutmix`. In details, `Crop Coords` in `RandomResizedCrop` operation, `Flip Status` in `RandomHorizontalFlip` operation, and `Mixup index, ratio, bbox` in `Mixup/CutMix` augmentation, and soft label are saved in `FKD` file. The saved configuration will be loaded in [training on relabeled data ](../train).
+As illustrated below, we modify the [`FKD`](https://github.com/szq0214/FKD) code to make it compatible with `Mixup` and `CutMix`. In details, `Crop Coords` in `RandomResizedCrop` operation, `Flip Status` in `RandomHorizontalFlip` operation, and `Mixup index, ratio, bbox` in `Mixup/CutMix` augmentation, and soft label are saved as configuration files. The saved configuration files will be loaded in [training on relabeled data ](../train).
 
 <div align=left>
 <img style="width:70%" src="../img/fkd-mix.png">
