@@ -5,8 +5,8 @@
 - Python >= 3.8
 - PyTorch >= 2.0.0
 - Torchvision >= 0.15.1
-- Modify PyTorch source code `torch.utils.data._utils.fetch._MapDatasetFetcher` to support multi-processing loading soft labels data and mix configurations.
-- ```python
+- Modify PyTorch source code `torch.utils.data._utils.fetch._MapDatasetFetcher` to support *multi-processing loading* of soft label data and mix configurations.
+    ```python
     ### Original code
     class _MapDatasetFetcher(_BaseDatasetFetcher):
         def fetch(self, possibly_batched_index):
@@ -38,7 +38,6 @@
             else:
                 return self.collate_fn(data)
     ```
-
 
 
 ## Training
