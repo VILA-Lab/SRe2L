@@ -101,6 +101,8 @@ def main():
     train_dataset = ImageFolder_FKD_MIX(
         fkd_path=args.fkd_path,
         mode=args.mode,
+        args_epoch=args.epochs,
+        args_bs=args.batch_size,
         root=args.train_dir,
         transform=ComposeWithCoords(transforms=[
             RandomResizedCropWithCoords(size=224,

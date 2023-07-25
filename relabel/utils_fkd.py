@@ -4,7 +4,6 @@ import torch.distributed
 import torchvision
 from torchvision.transforms import functional as t_F
 import numpy as np
-import pickle
 
 class RandomResizedCropWithCoords(torchvision.transforms.RandomResizedCrop):
     def __init__(self, **kwargs):
@@ -88,18 +87,44 @@ class RandomHorizontalFlipWithRes(torch.nn.Module):
         return self.__class__.__name__ + '(p={})'.format(self.p)
 
 
+def get_FKD_info(fkd_path):
+    def custom_sort_key(s):
+        # Extract numeric part from the string using regular expression
+        numeric_part = int(s.split('_')[1].split('.tar')[0])
+        return numeric_part
+
+    max_epoch = len(os.listdir(fkd_path))
+    batch_list = sorted(os.listdir(os.path.join(
+        fkd_path + 'epoch_0')), key=custom_sort_key)
+    batch_size = torch.load(os.path.join(
+        fkd_path, 'epoch_0', batch_list[0]))[1].size()[0]
+    last_batch_size = torch.load(os.path.join(
+        fkd_path, 'epoch_0', batch_list[-1]))[1].size()[0]
+    num_img = batch_size * (len(batch_list) - 1) + last_batch_size
+
+    print('======= FKD: dataset info ======')
+    print('path: {}'.format(fkd_path))
+    print('num img: {}'.format(num_img))
+    print('batch size: {}'.format(batch_size))
+    print('max epoch: {}'.format(max_epoch))
+    print('================================')
+    return max_epoch, batch_size, num_img
+
 class ImageFolder_FKD_MIX(torchvision.datasets.ImageFolder):
-    def __init__(self, **kwargs):
-        self.fkd_path = kwargs['fkd_path']
-        self.mode = kwargs['mode']
-        kwargs.pop('fkd_path')
-        kwargs.pop('mode')
+    def __init__(self, fkd_path, mode, args_epoch=None, args_bs=None, **kwargs):
+        self.fkd_path = fkd_path
+        self.mode = mode
         super(ImageFolder_FKD_MIX, self).__init__(**kwargs)
-        self.batch_config = None # [list(coords), list(flip_status)]
-        self.batch_config_idx = 0 # index of processing image in this batch
+        self.batch_config = None  # [list(coords), list(flip_status)]
+        self.batch_config_idx = 0  # index of processing image in this batch
         if self.mode == 'fkd_load':
+            max_epoch, batch_size, num_img = get_FKD_info(self.fkd_path)
+            if args_epoch > max_epoch:
+                raise ValueError(f'`--epochs` should be no more than max epoch.')
+            if args_bs != batch_size:
+                raise ValueError('`--batch-size` should be same in both saving and loading phase. Please use `--gradient-accumulation-steps` to control batch size in model forward phase.')
             # self.img2batch_idx_list = torch.load('/path/to/img2batch_idx_list.tar')
-            self.img2batch_idx_list = get_img2batch_idx_list()
+            self.img2batch_idx_list = get_img2batch_idx_list(num_img=num_img, batch_size=batch_size, epochs=max_epoch)
             self.epoch = None
 
     def __getitem__(self, index):
@@ -137,7 +162,7 @@ class ImageFolder_FKD_MIX(torchvision.datasets.ImageFolder):
         """Use the `img_idx` to locate the `batch_idx`
 
         Args:
-            img_idx: the first index of images in this batch
+            img_idx: index of the first image in this batch
         """
         assert self.epoch != None
         batch_idx = self.img2batch_idx_list[self.epoch][img_idx]

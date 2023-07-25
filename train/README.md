@@ -6,39 +6,38 @@
 - PyTorch >= 2.0.0
 - Torchvision >= 0.15.1
 - Modify PyTorch source code `torch.utils.data._utils.fetch._MapDatasetFetcher` to support *multi-processing loading* of soft label data and mix configurations.
-    ```python
-    ### Original code
-    class _MapDatasetFetcher(_BaseDatasetFetcher):
-        def fetch(self, possibly_batched_index):
-            if self.auto_collation:
-                if hasattr(self.dataset, "__getitems__") and self.dataset.__getitems__:
-                    data = self.dataset.__getitems__(possibly_batched_index)
-                else:
-                    data = [self.dataset[idx] for idx in possibly_batched_index]
-            else:
-                data = self.dataset[possibly_batched_index]
-            return self.collate_fn(data)
+  ```python
+  ### Original code
+  class _MapDatasetFetcher(_BaseDatasetFetcher):
+      def fetch(self, possibly_batched_index):
+          if self.auto_collation:
+              if hasattr(self.dataset, "__getitems__") and self.dataset.__getitems__:
+                  data = self.dataset.__getitems__(possibly_batched_index)
+              else:
+                  data = [self.dataset[idx] for idx in possibly_batched_index]
+          else:
+              data = self.dataset[possibly_batched_index]
+          return self.collate_fn(data)
 
-    ### Modified code
-    class _MapDatasetFetcher(_BaseDatasetFetcher):
-        def fetch(self, possibly_batched_index):
-            if hasattr(self.dataset, "mode") and self.dataset.mode == 'fkd_load':
-                mix_index, mix_lam, mix_bbox, soft_label = self.dataset.load_batch_config(possibly_batched_index[0])
+  ### Modified code
+  class _MapDatasetFetcher(_BaseDatasetFetcher):
+      def fetch(self, possibly_batched_index):
+          if hasattr(self.dataset, "mode") and self.dataset.mode == 'fkd_load':
+              mix_index, mix_lam, mix_bbox, soft_label = self.dataset.load_batch_config(possibly_batched_index[0])
 
-            if self.auto_collation:
-                if hasattr(self.dataset, "__getitems__") and self.dataset.__getitems__:
-                    data = self.dataset.__getitems__(possibly_batched_index)
-                else:
-                    data = [self.dataset[idx] for idx in possibly_batched_index]
-            else:
-                data = self.dataset[possibly_batched_index]
+          if self.auto_collation:
+              if hasattr(self.dataset, "__getitems__") and self.dataset.__getitems__:
+                  data = self.dataset.__getitems__(possibly_batched_index)
+              else:
+                  data = [self.dataset[idx] for idx in possibly_batched_index]
+          else:
+              data = self.dataset[possibly_batched_index]
 
-            if hasattr(self.dataset, "mode") and self.dataset.mode == 'fkd_load':
-                return self.collate_fn(data), mix_index.cpu(), mix_lam, mix_bbox, soft_label.cpu()
-            else:
-                return self.collate_fn(data)
-    ```
-
+          if hasattr(self.dataset, "mode") and self.dataset.mode == 'fkd_load':
+              return self.collate_fn(data), mix_index.cpu(), mix_lam, mix_bbox, soft_label.cpu()
+          else:
+              return self.collate_fn(data)
+  ```
 
 ## Training
 
@@ -61,11 +60,11 @@ python train_FKD.py \
 
 Since we modify the PyTorch source code to load the soft labels data and mix configurations before fetching batch data, it will take more memory than the original code due to extra files to be temporarily stored in memory. Thus, we recommend to use a smaller `-j` number of workers to load data and use a larger `--gradient-accumulation-steps` to reduce the memory in model inference. For reference, we use `-j 4 --gradient-accumulation-steps 4` in single RTX 4090 with 24GB memory, `-j 8 --gradient-accumulation-steps 1` in single Tesla A100 with 40GB. There is no effect on `val_loader`, whose `num_workers` can be set to a larger number.
 
-In terms of the `--gradient-accumulation-steps` argument, it will split the laoded batch data of 1024 into some smaller batch data. For example, if `--gradient-accumulation-steps 4`, it will split the loaded batch data of 1024 into 4 batch data of 256. Then, it will accumulate the gradients of 4 batch data of 256 and update the model parameters once. In this way, it can reduce the memory in model inference.
+In terms of the FKD-related arguments, they should align to the setting in [relabel](../relabel). For example, `--batch-size` should be the same value in [relabel](../relabel) and `--epochs` argument should be no more than the epochs in [relabel](../relabel).
+
+In terms of the `--gradient-accumulation-steps` argument, it will split the loaded batch data of `--batch-size` into some smaller batch data. For example, if `--gradient-accumulation-steps 4`, it will split the loaded batch data of 1024 into 4 smaller batch data of 256 each. Then, it will accumulate the gradients of 4 smaller batch data and update the model parameters once. In this way, it can reduce the memory in model inference.
 
 In terms of `wandb`, we use it to record the training process. If you don't want to use it, you can set `wandb disabled` in `train.sh`. If you want to use it, you need to set `wandb enabled \\ wandb online` and `--wandb-api-key` in `train.sh`.
-
-
 
 ## Usage
 

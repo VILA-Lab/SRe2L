@@ -2,10 +2,8 @@
 
 import torch
 from torch import distributed
-import random
 import numpy as np
 
-random.seed(0)
 
 def distributed_is_initialized():
     if distributed.is_available():
