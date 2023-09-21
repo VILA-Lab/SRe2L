@@ -1,6 +1,6 @@
 # SRe2L
 
-Official PyTorch implementation of paper:
+Official PyTorch implementation of paper (NeurIPS 2023 spotlight):
 >[__"*Squeeze*, *Recover* and *Relabel*: Dataset Condensation at ImageNet Scale From A New Perspective"__](https://arxiv.org/abs/2306.13092)<br>
 >[Zeyuan Yin](https://zeyuanyin.github.io), [Eric Xing](http://www.cs.cmu.edu/~epxing/), [Zhiqiang Shen](http://zhiqiangshen.com/)<br>
 >MBZUAI, CMU
