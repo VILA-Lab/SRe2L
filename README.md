@@ -55,11 +55,11 @@ cd relabel
 sh relabel.sh
 ```
 
-## Train on Distilled Data
+## Validate distilled dataset
 
-More details in [train/README.md](train/README.md).
+More details in [validate/README.md](validate/README.md).
 ```bash
-cd train
+cd validate
 sh train.sh
 ```
 
