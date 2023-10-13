@@ -1,22 +1,23 @@
+import argparse
 import os
 import random
 import warnings
-import argparse
 
 import torch
-import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.distributed as dist
-import torch.optim
 import torch.multiprocessing as mp
+import torch.nn.parallel
+import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
-import torchvision.transforms as transforms
 import torchvision.models as models
+import torchvision.transforms as transforms
 from torchvision.transforms import InterpolationMode
-
 from tqdm import tqdm
-from utils_fkd import ImageFolder_FKD_MIX, ComposeWithCoords, RandomResizedCropWithCoords, RandomHorizontalFlipWithRes, mix_aug
+from utils_fkd import (ComposeWithCoords, ImageFolder_FKD_MIX,
+                       RandomHorizontalFlipWithRes,
+                       RandomResizedCropWithCoords, mix_aug)
 
 parser = argparse.ArgumentParser(description='FKD Soft Label Generation on ImageNet-1K w/ Mix Augmentation')
 parser.add_argument('--data', metavar='DIR',

@@ -1,5 +1,6 @@
-import torch
 import numpy as np
+import torch
+
 
 # keep top k largest values, and smooth others
 def keep_top_k(p,k,n_classes=1000): # p is the softmax on label output

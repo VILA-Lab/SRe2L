@@ -1,9 +1,11 @@
 import os
+
+import numpy as np
 import torch
 import torch.distributed
 import torchvision
 from torchvision.transforms import functional as t_F
-import numpy as np
+
 
 class RandomResizedCropWithCoords(torchvision.transforms.RandomResizedCrop):
     def __init__(self, **kwargs):

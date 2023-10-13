@@ -1,20 +1,19 @@
 '''This code is modified from https://github.com/liuzechun/Data-Free-NAS'''
 
-import os
-import random
 import argparse
 import collections
-import numpy as np
-from PIL import Image
+import os
+import random
 
+import numpy as np
 import torch
-import torch.utils
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import transforms
-import torchvision.models as models
+import torch.utils
 import torch.utils.data.distributed
-
+import torchvision.models as models
+from PIL import Image
+from torchvision import transforms
 from utils import *
 
 
