@@ -15,7 +15,6 @@ Official PyTorch implementation of paper (NeurIPS 2023 spotlight):
 ## Catalog
 - [x] ImageNet-1K Code
 - [x] Tiny-ImageNet-200 Code
-- [x] CIFAR-10/100 Code
 - [x] FKD-Mix Code
 - [x] Distilled Datasets [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
 
@@ -89,11 +88,11 @@ Our Top-1 accuracy (%) under different IPC settings on Tiny-ImageNet and ImageNe
 If you find our code useful for your research, please cite our paper.
 
 ```
-@article{yin2023squeeze,
-	title = {Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
-	author = {Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
-	journal = {arXiv preprint arXiv:2306.13092},
-	year = {2023}
+@inproceedings{yin2023sre2l,
+	title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
+	author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
+	booktitle={Proceedings of the Advances in Neural Information Processing Systems (NeurIPS)},
+	year={2023}
 }
 ```
 
