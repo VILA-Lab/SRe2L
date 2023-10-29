@@ -19,3 +19,12 @@ sh recover_tiny.sh
 
 ## Relabel
 Based on the squeezed code, we added corresponding relabeling code to relabel the Tiny-ImageNet data.
+
+
+## Download distilled images from [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
+
+
+| dataset | resolution | iteration | IPC | files |
+|:---:|:---:|:---:|:---:| :---:|
+| Tiny-ImageNet-200 | 64x64 | 1K | 50 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_tiny_rn18_1k_ipc50.zip)|
+| Tiny-ImageNet-200 | 64x64 | 4K | 100 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_tiny_rn18_4k_ipc100.zip)|

@@ -1,7 +1,7 @@
 python recover_tiny.py \
 --arch-name "resnet18" \
---arch-path '/home/zeyuan.yin/My-DD-iclr/tiny-save/resnet18_E50/checkpoint.pth' \
---exp-name "sre2l_tiny_rn18E50_4K_ipc50" \
+--arch-path 'path/to/tiny_resnet18/checkpoint.pth' \
+--exp-name "sre2l_tiny_rn18_4k_ipc50" \
 --syn-data-path './syn_data' \
 --batch-size 100 \
 --lr 0.1 \
