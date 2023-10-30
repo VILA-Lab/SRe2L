@@ -1,8 +1,8 @@
 '''This code is modified from https://github.com/liuzechun/Data-Free-NAS'''
 
+import numpy as np
 import torch
 from torch import distributed
-import numpy as np
 
 
 def distributed_is_initialized():
@@ -66,7 +66,7 @@ def clip(image_tensor, use_fp16=False):
         std = np.array([0.229, 0.224, 0.225])
     for c in range(3):
         m, s = mean[c], std[c]
-        image_tensor[:, c] = torch.clamp(image_tensor[:, c], -m / s, (1 - m) / s)
+        image_tensor[:, c] = torch.clamp(image_tensor[:, c], -m/s, (1 - m)/s)
     return image_tensor
 
 
@@ -97,8 +97,7 @@ class BNFeatureHook():
         nch = input[0].shape[1]
         mean = input[0].mean([0, 2, 3])
         var = input[0].permute(1, 0, 2, 3).contiguous().reshape([nch, -1]).var(1, unbiased=False)
-        r_feature = torch.norm(module.running_var.data - var, 2) + torch.norm(
-            module.running_mean.data - mean, 2)
+        r_feature = torch.norm(module.running_var.data - var, 2) + torch.norm(module.running_mean.data - mean, 2)
         self.r_feature = r_feature
 
     def close(self):

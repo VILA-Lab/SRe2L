@@ -11,6 +11,13 @@ Official PyTorch implementation of paper (NeurIPS 2023 spotlight):
 <img width=80% src="./img/overview.png"/>
 </div>
 
+
+## Catalog
+- [x] ImageNet-1K Code
+- [x] Tiny-ImageNet-200 Code
+- [x] FKD-Mix Code
+- [x] Distilled Datasets [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
+
 ## Abstract
 
 We present a new dataset condensation framework termed *<b>S</b>queeze* (<img width=2% src="./img/squeeze.png"/>), *<b>Re</b>cover* (<img width=2% src="./img/recover.png"/>) and *<b>Re</b>labe<b>l</b>* (<img width=1.7% src="./img/relabel.png"/>) (SRe<sup>2</sup>L) that decouples the bilevel optimization of model and synthetic data during training, to handle varying scales of datasets, model architectures and image resolutions for effective dataset condensation. The proposed method demonstrates flexibility across diverse dataset scales and exhibits multiple advantages in terms of arbitrary resolutions of synthesized images, low training cost and memory consumption with high-resolution training, and the ability to scale up to arbitrary evaluation network architectures. Extensive experiments are conducted on Tiny-ImageNet and full ImageNet-1K datasets. Under 50 IPC, our approach achieves the highest 42.5% and 60.8% validation accuracy on Tiny-ImageNet and ImageNet-1K, outperforming all previous state-of-the-art methods by margins of 14.5% and 32.9%, respectively. Our approach also outperforms MTT by approximately 52&times; (ConvNet-4) and 16&times; (ResNet-18) faster in speed with less memory consumption of 11.6&times; and 6.4&times; during data synthesis.
@@ -55,17 +62,26 @@ cd relabel
 sh relabel.sh
 ```
 
-## Train on Distilled Data
+## Validate distilled dataset
 
-More details in [train/README.md](train/README.md).
+More details in [validate/README.md](validate/README.md).
 ```bash
-cd train
+cd validate
 sh train.sh
 ```
 
 ## Download
 
-You can download distilled data and soft labels from https://zeyuanyin.github.io/projects/SRe2L/#Download.
+You can download distilled data and soft labels from [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L).
+
+| dataset | resolution | iteration | IPC | files |
+|:---:|:---:|:---:|:---:| :---:|
+| ImageNet-1K | 224x224 | 4K | 50 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_in1k_rn18_4k_ipc50.zip) <br> [mixup labels](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/FKD_mixup_fp16.tar.gz) / [cutmix labels](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/FKD_cutmix_fp16.tar.gz) |
+| ImageNet-1K | 224x224 | 2K | 50 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_in1k_rn18_2k_ipc50.zip)|
+| ImageNet-1K | 224x224 | 4K | 200 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_in1k_rn18_4k_ipc200.zip)|
+| Tiny-ImageNet-200 | 64x64 | 1K | 50 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_tiny_rn18_1k_ipc50.zip)|
+| Tiny-ImageNet-200 | 64x64 | 4K | 100 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_tiny_rn18_4k_ipc100.zip)|
+
 
 ## Results
 
@@ -81,11 +97,11 @@ Our Top-1 accuracy (%) under different IPC settings on Tiny-ImageNet and ImageNe
 If you find our code useful for your research, please cite our paper.
 
 ```
-@article{yin2023squeeze,
-	title = {Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
-	author = {Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
-	journal = {arXiv preprint arXiv:2306.13092},
-	year = {2023}
+@inproceedings{yin2023sre2l,
+	title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
+	author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
+	booktitle={Proceedings of the Advances in Neural Information Processing Systems (NeurIPS)},
+	year={2023}
 }
 ```
 

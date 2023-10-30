@@ -1,27 +1,30 @@
-import os
-import sys
-import math
-import time
-import shutil
 import argparse
-import numpy as np
-import wandb
+import math
+import os
+import shutil
+import sys
+import time
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-from torchvision.transforms import InterpolationMode
+import wandb
 from torch.optim.lr_scheduler import LambdaLR
-
+from torchvision.transforms import InterpolationMode
 from utils import AverageMeter, accuracy, get_parameters
-sys.path.append('..')
-from relabel.utils_fkd import ImageFolder_FKD_MIX, ComposeWithCoords, RandomResizedCropWithCoords, RandomHorizontalFlipWithRes, mix_aug
 
+sys.path.append('..')
 # It is imported for you to access and modify the PyTorch source code (via Ctrl+Click), more details in README.md
 from torch.utils.data._utils.fetch import _MapDatasetFetcher
+
+from relabel.utils_fkd import (ComposeWithCoords, ImageFolder_FKD_MIX,
+                               RandomHorizontalFlipWithRes,
+                               RandomResizedCropWithCoords, mix_aug)
+
 
 def get_args():
     parser = argparse.ArgumentParser("FKD Training on ImageNet-1K")

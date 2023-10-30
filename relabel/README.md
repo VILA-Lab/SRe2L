@@ -77,4 +77,7 @@ arguments:
 
 
 
-## Download Soft Labels from https://zeyuanyin.github.io/projects/SRe2L/#Download
+## Download soft labels from [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
+| dataset | resolution | iteration | IPC | files |
+|:---:|:---:|:---:|:---:| :---:|
+| ImageNet-1K | 224x224 | 4K | 50 | [images](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/sre2l_in1k_rn18_4k_ipc50.zip) <br> [mixup labels](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/FKD_mixup_fp16.tar.gz) / [cutmix labels](https://huggingface.co/datasets/zeyuanyin/SRe2L/resolve/main/FKD_cutmix_fp16.tar.gz) |
