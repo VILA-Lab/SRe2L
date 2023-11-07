@@ -43,7 +43,7 @@ Kindly wait a few seconds for the animation visualizations to load.
 
 - For ImageNet-1K, we use the official PyTorch pre-trained models from [Torchvision Model Zoo](https://pytorch.org/vision/stable/models.html).
 
-- For Tiny-ImageNet-200, we use official [Torchvision code](https://github.com/pytorch/vision/tree/main/references/classification) to train the model from scratch.
+- For Tiny-ImageNet-200, we adapt official [Torchvision code](https://github.com/pytorch/vision/tree/main/references/classification) to train the model from scratch. You can find the training code and checkpoints at [tiny-imagenet](https://github.com/zeyuanyin/tiny-imagenet).
 
 
 ## Recover <img width=2.8% src="./img/recover.png"/>
