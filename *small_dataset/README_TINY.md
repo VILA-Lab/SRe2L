@@ -2,7 +2,7 @@
 
 ## Squeeze
 
-For the squeezed model on Tiny-ImageNet, we modified the ResNet model structure and adapted the official torchvision classification code available at https://github.com/pytorch/vision/tree/main/references/classification to train the model on Tiny-ImageNet.
+For the squeezed model on Tiny-ImageNet, we modified the ResNet model structure and adapted the official torchvision classification code available at https://github.com/pytorch/vision/tree/main/references/classification to train the model on Tiny-ImageNet. You can find the training code and checkpoints at [tiny-imagenet](https://github.com/zeyuanyin/tiny-imagenet).
 
 ```
 model = models.__dict__['resnet18'](num_classes=200)
