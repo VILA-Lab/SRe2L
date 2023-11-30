@@ -97,11 +97,11 @@ Our Top-1 accuracy (%) under different IPC settings on Tiny-ImageNet and ImageNe
 If you find our code useful for your research, please cite our paper.
 
 ```
-@inproceedings{yin2023sre2l,
-	title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
-	author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
-	booktitle={Proceedings of the Advances in Neural Information Processing Systems (NeurIPS)},
-	year={2023}
+@inproceedings{yin2023squeeze,
+  title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
+  author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
+  booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
+  year={2023},
 }
 ```
 

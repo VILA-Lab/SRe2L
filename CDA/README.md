@@ -2,7 +2,8 @@
 
 Official PyTorch implementation of paper :
 >[__"Dataset Distillation in Large Data Era"__](https://arxiv.org/abs/23XXX)<br>
-
+>[Zeyuan Yin](https://zeyuanyin.github.io), [Zhiqiang Shen](http://zhiqiangshen.com/)<br>
+>MBZUAI
 
 <div align=center>
 <img style="width:30%" src="./img/method.png">

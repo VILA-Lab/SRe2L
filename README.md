@@ -10,10 +10,10 @@ _This is a collection of our work targeted at large-scale dataset distillation_.
 
 ```
 @inproceedings{yin2023squeeze,
-	title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
-	author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
-	booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
-	year={2023},
+  title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
+  author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
+  booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
+  year={2023},
 }
 ```
 
