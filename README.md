@@ -22,7 +22,7 @@ _This is a collection of our work targeted at large-scale dataset distillation_.
 @article{yin2023dataset,
   title={Dataset Distillation in Large Data Era},
   author={Yin, Zeyuan and Shen, Zhiqiang},
-  journal={arXiv preprint arXiv:2311.},
+  journal={arXiv preprint arXiv:2311.18838},
   year={2023}
 }
 ```
