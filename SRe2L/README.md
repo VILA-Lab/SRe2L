@@ -15,6 +15,7 @@ Official PyTorch implementation of paper (NeurIPS 2023 spotlight):
 ## Catalog
 - [x] ImageNet-1K Code
 - [x] Tiny-ImageNet-200 Code
+- [x] CIFAR-100 Code
 - [x] FKD-Mix Code
 - [x] Distilled Datasets [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
 
