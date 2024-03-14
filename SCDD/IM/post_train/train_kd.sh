@@ -1,0 +1,14 @@
+python train_kd.py \
+    --wandb-project 'select_policy_random' \
+    --batch-size 64 \
+    --model resnet18 \
+    --teacher-model resnet18 \
+    --epochs 1000 \
+    --cos \
+    -j 8 --gradient-accumulation-steps 1 \
+    -T 20 \
+    --mix-type 'cutmix' \
+    --val-dir /your/path/imagenet/val \
+    --train-dir /your/synthesis_data_path \
+    --output-dir ./save \
+    --image-select-idx 0 \

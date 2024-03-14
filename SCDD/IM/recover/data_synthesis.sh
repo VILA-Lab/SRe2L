@@ -1,0 +1,13 @@
+python data_synthesis.py \
+    --arch-name "resnet50" \
+    --exp-name "recover_resnet50_ipc50" \
+    --pretrained "/your/pretrained_model.pth.tar" \
+    --syn-data-path './syn_data' \
+    --first-bn-multiplier 10 \
+    --batch-size 50 \
+    --lr 0.1 \
+    --iteration 1000 \
+    --l2-scale 0 --tv-l2 0 --r-bn 0.01 \
+    --verifier --store-best-images \
+    --index-start 0 \
+    --index-end 50 
