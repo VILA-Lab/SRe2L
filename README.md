@@ -6,6 +6,8 @@ _This is a collection of our work targeted at large-scale dataset distillation_.
 
 > [**SRe<sup>2</sup>L**](./SRe2L/) (```@NeurIPS'23 spotlight```): __*Squeeze*, *Recover* and *Relabel*: Dataset Condensation at ImageNet Scale From A New Perspective__.
 
+> [**SCDD**](./SCDD/) : __Self-supervised Compression Method for Dataset Distillation__ .
+
 ## Citation
 
 ```
