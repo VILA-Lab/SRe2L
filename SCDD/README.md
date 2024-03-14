@@ -1,6 +1,6 @@
 # Self-supervised Compression Method for Dataset Distillation 
 
-![vis_all](/source/vis_all.jpg)
+![vis_all](./source/vis_all.jpg)
 
 ## Abstract
 Dataset distillation aims to *compress* information and knowledge from a large-scale original dataset to a new compact dataset while striving to preserve the utmost degree of the original data's informational essence. Previous studies have predominantly concentrated on aligning the intermediate statistics between the original and distilled data, such as weight trajectory, features, gradient, BatchNorm, etc. 
@@ -9,7 +9,7 @@ In this work, we consider addressing this task through the new lens of **model i
 
 Extensive experiments are conducted on CIFAR-100, Tiny-ImageNet and ImageNet-1K datasets to demonstrate the superiority of our proposed approach. The proposed SC-DD outperforms all previous state-of-the-art supervised dataset distillation methods when employing larger models, such as SRe&sup2;L, MTT, TESLA, DC, CAFE, etc., by large margins. 
 
-![method](/source/method.jpg)
+![method](./source/method.jpg)
 
 ## Experiments
 ### Recover
