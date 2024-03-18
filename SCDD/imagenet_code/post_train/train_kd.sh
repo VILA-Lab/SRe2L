@@ -1,5 +1,4 @@
 python train_kd.py \
-    --wandb-project 'select_policy_random' \
     --batch-size 64 \
     --model resnet18 \
     --teacher-model resnet18 \
