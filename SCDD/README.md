@@ -13,7 +13,7 @@ In this work, we consider addressing this task through the new lens of **model i
 
 Extensive experiments are conducted on CIFAR-100, Tiny-ImageNet and ImageNet-1K datasets to demonstrate the superiority of our proposed approach. The proposed SC-DD outperforms all previous state-of-the-art supervised dataset distillation methods when employing larger models, such as SRe&sup2;L, MTT, TESLA, DC, CAFE, etc., by large margins. 
 
-<div>
+<div align=center>
 <img width=80% src="./source/method.jpg"/>
 </div>
 
