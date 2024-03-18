@@ -1,7 +1,7 @@
 python data_synthesis.py \
     --arch-name "resnet50" \
     --exp-name "recover_resnet50_ipc50" \
-    --pretrained "/your/pretrained_model.pth.tar" \
+    --pretrained "/your/PretrainedModel.pth.tar" \
     --syn-data-path './syn_data' \
     --first-bn-multiplier 10 \
     --batch-size 50 \

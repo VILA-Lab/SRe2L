@@ -12,7 +12,6 @@ from torch.optim.lr_scheduler import LambdaLR
 import os
 import argparse
 
-# from models import *
 from utils import progress_bar
 
 import numpy as np

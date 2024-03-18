@@ -1,5 +1,3 @@
-'''This code is modified from https://github.com/liuzechun/Data-Free-NAS'''
-
 import os
 import random
 import argparse
@@ -14,7 +12,6 @@ import torch.optim as optim
 from torchvision import transforms
 import torchvision.models as models
 import torch.utils.data.distributed
-# import wandb
 
 from utils import lr_cosine_policy, BNFeatureHook, clip_cifar, denormalize_cifar
 
@@ -238,19 +235,6 @@ def main_syn(args, ipc_id):
     state_dict = load_state_dict(args.arch_path)
     model_teacher.load_state_dict(state_dict)
 
-    print(model_teacher)
-    # exit()
-
-    # model_teacher = models.__dict__[args.arch_name](pretrained=True)
-    # ckp = '/home/muxin/DD/cifar_train-main/save_ciai/resnet18_cifar100/ckpt.pth'
-    # checkpoint = torch.load(ckp)
-    # model_teacher.load_state_dict(checkpoint['state_dict'])
-
-    # ckp = '/home/zeyuan/My-Dataset-Distillation/cifar_train/save/resnet18_E10/ckpt.pth'
-    # checkpoint = torch.load(ckp)
-    # model_teacher.load_state_dict(checkpoint['state_dict'])
-
-
     model_teacher = nn.DataParallel(model_teacher).cuda()
 
     model_teacher.eval()
@@ -258,12 +242,7 @@ def main_syn(args, ipc_id):
         p.requires_grad = False
 
     if False:
-
-        # model_verifier = MobileNetV2(num_classes=100)
-        # model_verifier = nn.DataParallel(model_verifier).cuda()
-        verifier_arch_path = '/home/muxin/DD/cifar_train-main/save_ciai/mobilenetv2_cifar100/ckpt.pth'
-        # checkpoint = torch.load(ckp)
-        # model_verifier.load_state_dict(checkpoint['state_dict'])
+        verifier_arch_path = 'your/path/mobilenetv2_cifar100/ckpt.pth'
 
         model_verifier = models.__dict__['mobilenet_v2'](num_classes=100)
         model_verifier.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
@@ -274,7 +253,6 @@ def main_syn(args, ipc_id):
 
         model_verifier = model_verifier.cuda()
 
-        # model_verifier = model_teacher #test
         model_verifier.eval()
         for p in model_verifier.parameters():
             p.requires_grad = False
@@ -292,7 +270,7 @@ def parse_args():
     parser.add_argument('--exp-name', type=str, default='test',
                         help='name of the experiment, subfolder under syn_data_path')
     parser.add_argument('--syn-data-path', type=str,
-                        default='/home/muxin/DD/SRe2L/recover/syn_data_new/cifar', help='where to store synthetic data')
+                        default='./syn_data', help='where to store synthetic data')
     parser.add_argument('--store-best-images', action='store_true',
                         help='whether to store best images')
     """Optimization related flags"""
