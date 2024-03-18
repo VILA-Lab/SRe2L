@@ -36,7 +36,6 @@ args = parser.parse_args()
 
 if args.check_ckpt:
     checkpoint = torch.load(args.check_ckpt)
-    # net.load_state_dict(checkpoint['state_dict'])
     best_acc = checkpoint['acc']
     start_epoch = checkpoint['epoch']
     print(f'==> test ckp: {args.check_ckpt}, acc: {best_acc}, epoch: {start_epoch}')
@@ -116,10 +115,7 @@ if args.resume:
     start_epoch = checkpoint['epoch']
 
 criterion = nn.CrossEntropyLoss()
-# optimizer = optim.SGD(net.parameters(), lr=args.lr,
-#                       momentum=0.9, weight_decay=args.weight_decay)
 
-# best lr=0.001, wd=0.01,0.005
 optimizer = optim.AdamW(net.parameters(), lr=0.001, weight_decay=0.01)
 
 if True:
@@ -195,8 +191,6 @@ def train(epoch):
 
         inputs, target_a, target_b, lam = mixup_data(inputs, targets)
 
-        # inputs = cutmix_data(inputs)
-
         optimizer.zero_grad()
         outputs = net(inputs)
 
@@ -206,8 +200,6 @@ def train(epoch):
 
         loss = loss_function_kl(outputs_, soft_label)
 
-        # loss = criterion(outputs, targets)
-
 
         loss.backward()
         optimizer.step()
@@ -216,8 +208,6 @@ def train(epoch):
         _, predicted = outputs.max(1)
         total += targets.size(0)
         correct += predicted.eq(targets).sum().item()
-
-        # progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)' % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
 
 
 def test(epoch):
@@ -240,7 +230,6 @@ def test(epoch):
             acc = 100.*correct/total
             if acc > best_acc:
                 best_acc = acc
-            # progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)' % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
 
     # Save checkpoint.
     acc = 100.*correct/total
@@ -254,8 +243,7 @@ def test(epoch):
             'acc': acc,
             'epoch': epoch,
         }
-        # if not os.path.isdir('checkpoint'):
-        #     os.mkdir('checkpoint')
+
 
         path = os.path.join(args.output_dir, './ckpt.pth')
         torch.save(state, path)

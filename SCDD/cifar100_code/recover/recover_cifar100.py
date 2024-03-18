@@ -21,13 +21,6 @@ def denormalize(image_tensor, use_fp16=False):
     '''
     convert floats back to input
     '''
-    # if use_fp16:
-    #     mean = np.array([0.485, 0.456, 0.406], dtype=np.float16)
-    #     std = np.array([0.229, 0.224, 0.225], dtype=np.float16)
-    # else:
-    #     mean = np.array([0.485, 0.456, 0.406])
-    #     std = np.array([0.229, 0.224, 0.225])
-    # (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
     mean = np.array([0.4914, 0.4822, 0.4465])
     std = np.array([0.2023, 0.1994, 0.2010])
 
@@ -53,7 +46,6 @@ def get_images(args, model_teacher, hook_for_display, ipc_id):
             loss_r_feature_layers.append(BNFeatureHook(module))
 
     # setup target labels
-    # targets_all = torch.LongTensor(np.random.permutation(1000))
     targets_all = torch.LongTensor(np.arange(100))
 
     for kk in range(0, 100, batch_size):
@@ -104,17 +96,6 @@ def get_images(args, model_teacher, hook_for_display, ipc_id):
             loss_r_bn_feature = [mod.r_feature.to(loss_ce.device) * rescale[idx] for (idx, mod) in enumerate(loss_r_feature_layers)]
             loss_r_bn_feature = torch.stack(loss_r_bn_feature).sum()
 
-            # R_prior losses
-            # _, loss_var_l2 = get_image_prior_losses(inputs_jit)
-
-            # l2 loss on images
-            # loss_l2 = torch.norm(inputs_jit.reshape(batch_size, -1), dim=1).mean()
-
-            # combining losses
-            # loss_aux = args.tv_l2 * loss_var_l2 + \
-            #             args.l2_scale * loss_l2 + \
-            #             args.r_bn * loss_r_bn_feature
-
             loss_aux = args.r_bn * loss_r_bn_feature
 
             loss = loss_ce + loss_aux
@@ -134,15 +115,12 @@ def get_images(args, model_teacher, hook_for_display, ipc_id):
                         'image/acc_image': acc_image,
                         'image/loss_image': loss_image,
                     }
-                    # wandb_metrics.update(metrics)
 
                 metrics = {
                     'crop/loss_ce': loss_ce.item(),
                     'crop/loss_r_bn_feature': loss_r_bn_feature.item(),
                     'crop/loss_total': loss.item(),
                 }
-                # wandb_metrics.update(metrics)
-                # wandb.log(wandb_metrics)
 
 
             # do image update
@@ -162,7 +140,6 @@ def get_images(args, model_teacher, hook_for_display, ipc_id):
 
         # to reduce memory consumption by states of the optimizer we deallocate memory
         optimizer.state = collections.defaultdict(dict)
-        # exit()
     torch.cuda.empty_cache()
 
 def save_images(args, images, targets, ipc_id):
@@ -186,8 +163,6 @@ def save_images(args, images, targets, ipc_id):
         pil_image.save(place_to_store)
 
 def validate(input, target, model):
-    # print(f'input dim: {input.shape}')
-    # return 0,0
 
     def accuracy(output, target, topk=(1,)):
         maxk = max(topk)
@@ -312,15 +287,6 @@ if __name__ == '__main__':
 
     args = parse_args()
 
-    # if not wandb.api.api_key:
-    #     wandb.login(key='d15c9070e9dbb45d5decc4735216c27bb89f18a4')
-    # wandb.init(project='sre2l-nips-re', name=args.exp_name)
-    # global wandb_metrics
-    # wandb_metrics = {}
-    # for ipc_id in range(0,50):
     for ipc_id in range(args.ipc_start, args.ipc_end):
         print('ipc = ', ipc_id)
-        # wandb.log({'ipc_id': ipc_id})
         main_syn(args, ipc_id)
-
-    # wandb.finish()
