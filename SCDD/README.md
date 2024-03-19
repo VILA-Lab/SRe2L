@@ -61,4 +61,5 @@ Table: Top-1 validation accuracy trained from 10, 50, 100, 200 synthetic image(s
 
 ## Acknowledgments
 Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
+
 The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
