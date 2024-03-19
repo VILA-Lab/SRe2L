@@ -17,6 +17,7 @@ Official PyTorch implementation of paper (NeurIPS 2023 spotlight):
 - [x] Tiny-ImageNet-200 Code
 - [x] CIFAR-100 Code
 - [x] FKD-Mix Code
+- [x] Naive KD Code
 - [x] Distilled Datasets [![Hugging Face Datasets](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Datasets-blue)](https://huggingface.co/datasets/zeyuanyin/SRe2L)
 
 ## Abstract
@@ -65,10 +66,11 @@ sh relabel.sh
 
 ## Validate distilled dataset
 
+We provide two kinds of validation code: FKD and Naive KD. FKD is the main validation code aligned with our paper for relabeled distilled images. Naive KD is an alternative validation code to quickly validate the performance of the distilled data without the relabel process.
 More details in [validate/README.md](validate/README.md).
 ```bash
 cd validate
-sh train.sh
+sh train_FKD.sh
 ```
 
 ## Download
@@ -102,7 +104,7 @@ If you find our code useful for your research, please cite our paper.
   title={Squeeze, Recover and Relabel: Dataset Condensation at ImageNet Scale From A New Perspective},
   author={Yin, Zeyuan and Xing, Eric and Shen, Zhiqiang},
   booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
-  year={2023},
+  year={2023}
 }
 ```
 
