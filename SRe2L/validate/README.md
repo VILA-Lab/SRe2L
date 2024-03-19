@@ -1,4 +1,4 @@
-# Train models on relabeled data
+# Validate Performance of Distilled Data
 
 ## Preparation
 
@@ -39,20 +39,21 @@
               return self.collate_fn(data)
   ```
 
-## Training
+## Training on Relabeled Distilled Data
 
-To train a model on relabeled distilled data, run `train.sh` with the desired arguments.
+To train a model on relabeled distilled data, run `train_FKD.sh` with the desired arguments.
 
 ```bash
 python train_FKD.py \
-    --wandb-project 'final_rn18_fkd' \
+    --wandb-project 'val_rn18_fkd' \
     --batch-size 1024 \
+    --gradient-accumulation-steps 2 \
     --model resnet18 \
     --cos \
-    -j 4 --gradient-accumulation-steps 2 \
+    -j 4 \
     -T 20 \
     --mix-type 'cutmix' \
-    --output-dir ./save/final_rn18_fkd/rn18_[4K]_T20/ \
+    --output-dir ./save/val_rn18_fkd/rn18_[4K]_T20/ \
     --train-dir ../recover/syn_data/rn18_bn0.01_[4K]_x_l2_x_tv.crop \
     --val-dir /path/to/imagenet/val \
     --fkd-path ../relabel/FKD_cutmix_fp16
@@ -65,6 +66,29 @@ In terms of the FKD-related arguments, they should align to the setting in [rela
 In terms of the `--gradient-accumulation-steps` argument, it will split the loaded batch data of `--batch-size` into some smaller batch data. For example, if `--gradient-accumulation-steps 4`, it will split the loaded batch data of 1024 into 4 smaller batch data of 256 each. Then, it will accumulate the gradients of 4 smaller batch data and update the model parameters once. In this way, it can reduce the memory in model inference.
 
 In terms of `wandb`, we use it to record the training process. If you don't want to use it, you can set `wandb disabled` in `train.sh`. If you want to use it, you need to set `wandb enabled \\ wandb online` and `--wandb-api-key` in `train.sh`.
+
+## Alternative Validation
+
+We provide an alternative validation code with naive KD `train_KD.py` to quickly validate the performance of the distilled data without the relabel process. The usage is similar to the FKD training code `train_FKD.py`. You can run `train_KD.sh` with the desired arguments to conduct a quick validation.
+
+
+```bash
+python train_KD.py \
+    --wandb-project 'val_rn18_kd' \
+    --batch-size 512 \
+    --gradient-accumulation-steps 2 \
+    --model resnet18 \
+    --teacher-model resnet18 \
+    --cos \
+    -j 4 \
+    -T 20 \
+    --mix-type 'cutmix' \
+    --output-dir ./save/val_rn18_kd/rn18_[4K]_T20 \
+    --train-dir ../recover/syn_data/rn18_bn0.01_[4K]_x_l2_x_tv.crop \
+    --val-dir /home/zeyuan/imagenet/val
+```
+
+Kindly notice a slight difference in the usage of `--gradient-accumulation-steps` between `train_KD.py` and `train_FKD.py`. In `train_KD.py`, global_batch_size = batch_size * gradient_accumulation_steps where global_batch_size = batch_size in `train_FKD.py`. The global_batch_size is set to 1,024 in our paper.
 
 ## Usage
 
@@ -112,4 +136,46 @@ arguments:
   --mix-type {mixup,cutmix,None}
                         mixup or cutmix or None
   --fkd_seed FKD_SEED   seed for batch loading sampler
+```
+
+
+```
+usage: train_KD.py
+
+[-h] [--batch-size BATCH_SIZE] [--gradient-accumulation-steps GRADIENT_ACCUMULATION_STEPS] [--start-epoch START_EPOCH] [--epochs EPOCHS] [-j WORKERS] [--train-dir TRAIN_DIR] [--val-dir VAL_DIR] [--output-dir OUTPUT_DIR][--cos] [--adamw-lr ADAMW_LR] [--adamw-weight-decay ADAMW_WEIGHT_DECAY] [--model MODEL] [--teacher-model TEACHER_MODEL] [-T TEMPERATURE] [--wandb-project WANDB_PROJECT] [--wandb-api-key WANDB_API_KEY] [--mix-type {mixup,cutmix,None}] [--mixup MIXUP] [--cutmix CUTMIX] [--IPC IPC]
+
+arguments:
+  -h, --help            show this help message and exit
+  --batch-size BATCH_SIZE
+                        batch size
+  --gradient-accumulation-steps GRADIENT_ACCUMULATION_STEPS
+                        gradient accumulation steps for small gpu memory
+  --start-epoch START_EPOCH
+                        start epoch
+  --epochs EPOCHS       total epoch
+  -j WORKERS, --workers WORKERS
+                        number of data loading workers
+  --train-dir TRAIN_DIR
+                        path to training dataset
+  --val-dir VAL_DIR     path to validation dataset
+  --output-dir OUTPUT_DIR
+                        path to output dir
+  --cos                 cosine lr scheduler
+  --adamw-lr ADAMW_LR   adamw learning rate
+  --adamw-weight-decay ADAMW_WEIGHT_DECAY
+                        adamw weight decay
+  --model MODEL         student model name
+  --teacher-model TEACHER_MODEL
+                        teacher model name
+  -T TEMPERATURE, --temperature TEMPERATURE
+                        temperature for distillation loss
+  --wandb-project WANDB_PROJECT
+                        wandb project name
+  --wandb-api-key WANDB_API_KEY
+                        wandb api key
+  --mix-type {mixup,cutmix,None}
+                        mixup or cutmix or None
+  --mixup MIXUP         mixup alpha, mixup enabled if > 0. (default: 0.8)
+  --cutmix CUTMIX       cutmix alpha, cutmix enabled if > 0. (default: 1.0)
+  --IPC IPC             number of images per class
 ```
