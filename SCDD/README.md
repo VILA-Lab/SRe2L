@@ -33,7 +33,7 @@ The subsequent command will execute the recovery code on ImageNet-1k to synthesi
 python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/pretrained_model.pth.tar" --syn-data-path './syn_data' --first-bn-multiplier 10 --batch-size 50 --lr 0.1 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.01 --verifier --store-best-images --index-start 0 --index-end 50 
 ```
 
-The subsequent command will execute the recovery code on CIFAR-100 to synthesize images.
+The subsequent command will execute the recovery code on CIFAR-100.
 ```bash
 python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "cifar100_ipc50" --batch-size 100 --lr 0.4 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 1 --GPU-ID 0 
 ```
@@ -59,3 +59,6 @@ python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teach
 
 Table: Top-1 validation accuracy trained from 10, 50, 100, 200 synthetic image(s)/class with ResNet18.
 
+## Acknowledgments
+Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
+The code in the `/SCDD/imagenet_code/pretrain_model` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
