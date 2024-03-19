@@ -22,7 +22,7 @@ Overview of our learning paradigm. The top-left subfigure is the paradigm of sup
 
 ## Synthetic Images
 
-Below, we present our synthetic images generated for ImageNet-1k.
+Below, we present our synthetic images generated for ImageNet-1k, which subjectively closely resemble real images.
 
 <div align=center>
 <img style="width:80%" src="./source/syn_show.gif">
