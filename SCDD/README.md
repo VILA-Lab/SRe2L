@@ -1,10 +1,11 @@
 # Self-supervised Compression Method for Dataset Distillation 
 
+This repository hosts the code for our research paper titled *A Good Compression Is All You Need for Dataset Distillation* on ImageNet-1k and CIFAR-100 datasets.
+
 <div align=center>
 <img width=80% src="./source/vis_all.jpg"/>
 </div>
 
-This repo contains code for our *A Good Compression Is All You Need for Dataset Distillation*. 
 
 ## Abstract
 Dataset distillation aims to *compress* information and knowledge from a large-scale original dataset to a new compact dataset while striving to preserve the utmost degree of the original data's informational essence. Previous studies have predominantly concentrated on aligning the intermediate statistics between the original and distilled data, such as weight trajectory, features, gradient, BatchNorm, etc. 
@@ -19,6 +20,13 @@ Extensive experiments are conducted on CIFAR-100, Tiny-ImageNet and ImageNet-1K 
 
 Overview of our learning paradigm. The top-left subfigure is the paradigm of supervised pertaining with an end-to-end training scheme for both the backbone network and final alignment classifier. The bottom-left subfigure is the paradigm of our proposed procedure for dataset distillation: a backbone model is first pretrained using a self-supervised objective, then a linear probing layer is adjusted to align the distribution of pertaining and target dataset distribution. We do not fine-tune the backbone during the alignment phase to preserve the better intermediate distributions of mean and variance in batch normalization layers (illustrated in the middle yellow line chart of the figure). The bottom-middle subfigure is the data synthesis procedure and the left subfigure is the visualization of distilled images.
 
+## Synthetic Images
+
+Below, we present our synthetic images generated for ImageNet-1k.
+
+<div align=center>
+<img style="width:80%" src="./source/syn_show.gif">
+</div>
 
 ## Experiments
 ### Pretrain Model
