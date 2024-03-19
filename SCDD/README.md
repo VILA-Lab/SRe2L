@@ -50,6 +50,8 @@ python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teach
 ```
 
 ## Performance
+Here is the table displaying the Top-1 validation accuracy obtained from training with 10, 50, 100, and 200 synthetic images per class using ResNet18.
+
 | IPC | CIFAR-100 | Tiny-ImageNet | ImageNet-1K |
 |---|---|---|---|
 | 10 img/cls | - | 31.6 | 32.1 |
@@ -57,7 +59,6 @@ python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teach
 | 100 img/cls | - | - | 57.9 |
 | 200 img/cls | - | - | 63.5 | 
 
-Table: Top-1 validation accuracy trained from 10, 50, 100, 200 synthetic image(s)/class with ResNet18.
 
 ## Acknowledgments
 Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
