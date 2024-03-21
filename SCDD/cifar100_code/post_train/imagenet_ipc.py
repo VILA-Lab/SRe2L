@@ -126,16 +126,3 @@ def make_dataset(
         raise FileNotFoundError(msg)
 
     return instances
-
-
-if __name__ == '__main__':
-    set = ImageFolderIPC(root='/home/zeyuan.yin/imagenet/val', image_number=33)
-
-    # print(set.targets)
-
-    # set = SubImageFolder(root='/home/zeyuan.yin/imagenet_classifier/synthesized_data',image_number=14)
-    #  None 139305 ~ 140K (10%)
-    #  14   14000  ~ 14K  (1%)
-
-    print(len(set.samples))
-    # print(len(set.classes)) # 1000
