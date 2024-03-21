@@ -182,7 +182,7 @@ def get_parser():
     help="evaluate model on validation set",
 )
     parser.add_argument('--syn-data-path', type=str,
-                        default='', help='where to store synthetic data')
+                        default='./syn_data', help='where to store synthetic data')
     parser.add_argument('--store-best-images', action='store_true',
                         help='whether to store best images')
     """Optimization related flags"""
