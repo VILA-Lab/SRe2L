@@ -29,7 +29,9 @@ Below, we present our synthetic images generated for ImageNet-1k, which subjecti
 </div>
 
 ## Experiments
-### Pretrain Model
+Our work comprises three main sections, namely Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part.
+
+### Squeeze
 The command below executes the training of the MoCo v2 model on the ImageNet-1k dataset.
 ```bash
 python main_moco.py -a resnet18 --lr 0.03 --batch-size 256 --dist-url 'tcp://localhost:10001' --multiprocessing-distributed --world-size 1 --rank 0 /your/path/imagenet --mlp --moco-t 0.2 --aug-plus --cos 
@@ -46,29 +48,39 @@ The subsequent command will execute the recovery code on CIFAR-100.
 python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "cifar100_ipc50" --batch-size 100 --lr 0.4 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 1 --GPU-ID 0  
 ```
 
-### Validation
-The following command executes the code for post-training on the ImageNet-1k dataset.
+### Relabel
+The following command executes the code to validate on the ImageNet-1k dataset.
 ```bash
 python train_kd.py --batch-size 64 --model resnet18 --teacher-model resnet18 --epochs 1000 --cos -j 8 --gradient-accumulation-steps 1 -T 20 --mix-type 'cutmix' --val-dir /your/path/imagenet/val --train-dir /your/synthesis_data_path --output-dir ./save --image-select-idx 0 
 ```
 
-The following command executes the code for post-training on the CIFAR-100 dataset.
+The following command executes the code to validate on the CIFAR-100 dataset.
 ```bash
 python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teacher-model resnet18 --teacher-model-dir '/your/path/resnet_18_ckpt.pth' --train-dir '/your/path/syn_data' --output-dir /your/path/save 
 ```
 
 ## Performance
-Here is the table displaying the Top-1 validation accuracy obtained from training with 10, 50, 100, and 200 synthetic images per class using ResNet18.
+Here is the table displaying the Top-1 validation accuracy obtained from training with 10, 50, 100, and 200 synthetic images per class. Both SRe&sup2;L and our method utilize ResNet-18. For additional results, please refer to our paper *A Good Compression Is All You Need for Dataset Distillation*. 
 
-| IPC | CIFAR-100 | Tiny-ImageNet | ImageNet-1K |
+<div align=center>
+<img width=80% src="./source/performance.png"/>
+</div>
+
+<!-- | IPC | CIFAR-100 | Tiny-ImageNet | ImageNet-1K |
 |---|---|---|---|
 | 10 img/cls | - | 31.6 | 32.1 |
 | 50 img/cls | 53.4 | 45.9 | 53.1 |
 | 100 img/cls | - | - | 57.9 |
-| 200 img/cls | - | - | 63.5 | 
+| 200 img/cls | - | - | 63.5 |  -->
+
+Please find the hyper-parameters below. 
+<div align=center>
+<img width=80% src="./source/parameter.png"/>
+</div>
 
 
 ## Acknowledgments
 Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
 
 The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
+
