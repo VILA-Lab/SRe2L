@@ -160,7 +160,7 @@ def validate(input, target, model):
 def get_parser():
 
     parser = argparse.ArgumentParser(
-        "SRe2L: recover data from pre-trained model")
+        "DD: recover data from pre-trained model")
     """Data save flags"""
     parser.add_argument('--exp-name', type=str, default='test',
                         help='name of the experiment, subfolder under syn_data_path')
