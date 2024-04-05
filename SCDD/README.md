@@ -75,8 +75,11 @@ Here is the table displaying the Top-1 validation accuracy obtained from trainin
 
 Please find the hyper-parameters below. 
 <div align=center>
-<img width=80% src="./source/parameter.png"/>
+<img width=60% src="./source/parameter.png"/>
 </div>
+
+
+Please download the anonymously synthetic data of ImageNet-1k IPC50 using this [link]( https://drive.google.com/drive/folders/1VdqEIjohHMg3Kum77vU1-Q1uZzGJ9RVA?usp=sharing).
 
 
 ## Acknowledgments
