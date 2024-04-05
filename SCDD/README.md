@@ -32,10 +32,7 @@ Below, we present our synthetic images generated for ImageNet-1k, which subjecti
 Our work comprises three main sections, namely Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part.
 
 ### Squeeze
-The command below executes the training of the MoCo v2 model on the ImageNet-1k dataset.
-```bash
-python main_moco.py -a resnet18 --lr 0.03 --batch-size 256 --dist-url 'tcp://localhost:10001' --multiprocessing-distributed --world-size 1 --rank 0 /your/path/imagenet --mlp --moco-t 0.2 --aug-plus --cos 
-```
+Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1k dataset.
 
 ### Recover
 The subsequent command will execute the recovery code on ImageNet-1k to synthesize images.
