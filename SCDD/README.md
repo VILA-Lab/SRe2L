@@ -28,6 +28,13 @@ Below, we present our synthetic images generated for ImageNet-1k, which subjecti
 <img style="width:80%" src="./source/concat_show.gif">
 </div>
 
+
+Additionally, we have included our synthetic images on CIFAR-100. Please be patient if the GIF does not display immediately.
+
+<div align=center>
+<img style="width:60%" src="./source/concat_show_cifar.gif">
+</div>
+
 ## Experiments
 Our work comprises three main sections, namely Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part.
 
