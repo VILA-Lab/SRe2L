@@ -38,15 +38,6 @@ Additionally, we have included our synthetic images on CIFAR-100. Please be pati
 ## Experiments
 Our work comprises three main sections: Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part. We also provide the code for ImageNet-1K and CIFAR-100; please find the code in the corresponding folder. 
 
-To run codes for ImageNet-1K, you should 
-```
-cd imagenet_code/post_train
-```
-
-To run codes for CIFAR-100, you should 
-```
-cd cifar100_code
-```
 ### Squeeze
 Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1K dataset. You can also refer to `/imagenet_code/pretrain_moco` for pretraining model.
 
