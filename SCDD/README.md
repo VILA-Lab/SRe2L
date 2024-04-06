@@ -44,12 +44,12 @@ Please refer to this [link](https://github.com/facebookresearch/moco) to train t
 ### Recover
 The subsequent command will execute the recovery code on ImageNet-1K. To run this code, you should `cd imagenet_code/recover` first.
 ```bash
-python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/PretrainedModel.pth.tar" --syn-data-path './syn_data' --first-bn-multiplier 10 --batch-size 50 --lr 0.1 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.01 --verifier --store-best-images --index-start 0 --index-end 50 
+python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/pretrained_model.pth.tar" --syn-data-path './syn_data' --first-bn-multiplier 10 --batch-size 50 --lr 0.1 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.01 --verifier --store-best-images --index-start 0 --index-end 50 
 ```
 
 The subsequent command will execute the recovery code on CIFAR-100. To run this code, you should `cd cifar100_code/recover` first.
 ```bash
-python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "cifar100_ipc50" --batch-size 100 --lr 0.4 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 1 --GPU-ID 0  
+python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "cifar100_ipc18" --batch-size 100 --lr 0.4 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 1 --GPU-ID 0  
 ```
 
 ### Relabel
