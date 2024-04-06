@@ -1,6 +1,6 @@
 # Self-supervised Compression Method for Dataset Distillation 
 
-This repository hosts the code for our research paper titled *A Good Compression Is All You Need for Dataset Distillation* on ImageNet-1k and CIFAR-100 datasets.
+This repository hosts the code for our research paper titled *A Good Compression Is All You Need for Dataset Distillation* on ImageNet-1K and CIFAR-100 datasets.
 
 <div align=center>
 <img width=80% src="./source/vis_all.jpg"/>
@@ -18,11 +18,11 @@ Extensive experiments are conducted on CIFAR-100, Tiny-ImageNet and ImageNet-1K 
 <img width=80% src="./source/method.jpg"/>
 </div>
 
-Overview of our learning paradigm. The top-left subfigure is the paradigm of supervised pertaining with an end-to-end training scheme for both the backbone network and final alignment classifier. The bottom-left subfigure is the paradigm of our proposed procedure for dataset distillation: a backbone model is first pretrained using a self-supervised objective, then a linear probing layer is adjusted to align the distribution of pertaining and target dataset distribution. We do not fine-tune the backbone during the alignment phase to preserve the better intermediate distributions of mean and variance in batch normalization layers (illustrated in the middle yellow line chart of the figure). The bottom-middle subfigure is the data synthesis procedure and the left subfigure is the visualization of distilled images.
+This picture is the overview of our learning paradigm. The top-left subfigure is the paradigm of supervised pertaining with an end-to-end training scheme for both the backbone network and final alignment classifier. The bottom-left subfigure is the paradigm of our proposed procedure for dataset distillation: a backbone model is first pretrained using a self-supervised objective, then a linear probing layer is adjusted to align the distribution of pertaining and target dataset distribution. We do not fine-tune the backbone during the alignment phase to preserve the better intermediate distributions of mean and variance in batch normalization layers (illustrated in the middle yellow line chart of the figure). The bottom-middle subfigure is the data synthesis procedure and the left subfigure is the visualization of distilled images.
 
 ## Synthetic Images
 
-Below, we present our synthetic images generated for ImageNet-1k, which subjectively closely resemble real images.
+Below, we present our synthetic images generated on ImageNet-1K, which subjectively closely resemble real images.
 
 <div align=center>
 <img style="width:80%" src="./source/concat_show.gif">
@@ -36,13 +36,13 @@ Additionally, we have included our synthetic images on CIFAR-100. Please be pati
 </div>
 
 ## Experiments
-Our work comprises three main sections, namely Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part.
+Our work comprises three main sections: Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part. We also provide the code for ImageNet-1K and CIFAR-100; please find the code in the corresponding folder. 
 
 ### Squeeze
-Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1k dataset.
+Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1K dataset.
 
 ### Recover
-The subsequent command will execute the recovery code on ImageNet-1k to synthesize images.
+The subsequent command will execute the recovery code on ImageNet-1K.
 ```bash
 python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/PretrainedModel.pth.tar" --syn-data-path './syn_data' --first-bn-multiplier 10 --batch-size 50 --lr 0.1 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.01 --verifier --store-best-images --index-start 0 --index-end 50 
 ```
@@ -53,7 +53,7 @@ python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_
 ```
 
 ### Relabel
-The following command executes the code to validate on the ImageNet-1k dataset.
+The following command executes the code to validate on the ImageNet-1K dataset.
 ```bash
 python train_kd.py --batch-size 64 --model resnet18 --teacher-model resnet18 --epochs 1000 --cos -j 8 --gradient-accumulation-steps 1 -T 20 --mix-type 'cutmix' --val-dir /your/path/imagenet/val --train-dir /your/synthesis_data_path --output-dir ./save --image-select-idx 0 
 ```
@@ -77,17 +77,21 @@ Here is the table displaying the Top-1 validation accuracy obtained from trainin
 | 100 img/cls | - | - | 57.9 |
 | 200 img/cls | - | - | 63.5 |  -->
 
-Please find the hyper-parameters below. 
+Please find our hyper-parameters below. 
 <div align=center>
 <img width=60% src="./source/parameter.png"/>
 </div>
 
 
-Please download the anonymously synthetic data of ImageNet-1k IPC50 using this [link]( https://drive.google.com/drive/folders/1VdqEIjohHMg3Kum77vU1-Q1uZzGJ9RVA?usp=sharing).
+Please download our synthetic data of ImageNet-1K IPC50 using this [link]( https://drive.google.com/drive/folders/1VdqEIjohHMg3Kum77vU1-Q1uZzGJ9RVA?usp=sharing).
 
 
 ## Acknowledgments
-Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
-
-The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
-
+<ol>
+<li>
+    Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
+</li>
+<li>
+    The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
+</li>
+</ol>
