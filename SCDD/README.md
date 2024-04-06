@@ -1,6 +1,6 @@
 # Self-supervised Compression Method for Dataset Distillation 
 
-This repository hosts the code for our research paper titled *A Good Compression Is All You Need for Dataset Distillation* on ImageNet-1K and CIFAR-100 datasets.
+This repository hosts the code for our research paper *A Good Compression Is All You Need for Dataset Distillation*.
 
 <div align=center>
 <img width=80% src="./source/vis_all.jpg"/>
@@ -38,27 +38,36 @@ Additionally, we have included our synthetic images on CIFAR-100. Please be pati
 ## Experiments
 Our work comprises three main sections: Squeeze, Recover, and Relabel. Below, you'll find the instructions for running each part. We also provide the code for ImageNet-1K and CIFAR-100; please find the code in the corresponding folder. 
 
+To run codes for ImageNet-1K, you should 
+```
+cd imagenet_code/post_train
+```
+
+To run codes for CIFAR-100, you should 
+```
+cd cifar100_code
+```
 ### Squeeze
-Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1K dataset.
+Please refer to this [link](https://github.com/facebookresearch/moco) to train the MoCo v2 model on the ImageNet-1K dataset. You can also refer to `/imagenet_code/pretrain_moco` for pretraining model.
 
 ### Recover
-The subsequent command will execute the recovery code on ImageNet-1K.
+The subsequent command will execute the recovery code on ImageNet-1K. To run this code, you should `cd imagenet_code/recover` first.
 ```bash
 python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/PretrainedModel.pth.tar" --syn-data-path './syn_data' --first-bn-multiplier 10 --batch-size 50 --lr 0.1 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.01 --verifier --store-best-images --index-start 0 --index-end 50 
 ```
 
-The subsequent command will execute the recovery code on CIFAR-100.
+The subsequent command will execute the recovery code on CIFAR-100. To run this code, you should `cd cifar100_code/recover` first.
 ```bash
 python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "cifar100_ipc50" --batch-size 100 --lr 0.4 --iteration 1000 --l2-scale 0 --tv-l2 0 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 1 --GPU-ID 0  
 ```
 
 ### Relabel
-The following command executes the code to validate on the ImageNet-1K dataset.
+The following command executes the code to validate on the ImageNet-1K dataset. To run this code, you should `cd imagenet_code/post_train` first. 
 ```bash
 python train_kd.py --batch-size 64 --model resnet18 --teacher-model resnet18 --epochs 1000 --cos -j 8 --gradient-accumulation-steps 1 -T 20 --mix-type 'cutmix' --val-dir /your/path/imagenet/val --train-dir /your/synthesis_data_path --output-dir ./save --image-select-idx 0 
 ```
 
-The following command executes the code to validate on the CIFAR-100 dataset.
+The following command executes the code to validate on the CIFAR-100 dataset. To run this code, you should `cd cifar100_code/post_train` first. 
 ```bash
 python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teacher-model resnet18 --teacher-model-dir '/your/path/resnet_18_ckpt.pth' --train-dir '/your/path/syn_data' --output-dir /your/path/save 
 ```
@@ -89,9 +98,9 @@ Please download our synthetic data of ImageNet-1K IPC50 using this [link]( https
 ## Acknowledgments
 <ol>
 <li>
-    Our code framework is derived from [https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L](https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L).
+Our code framework is derived from https://github.com/VILA-Lab/SRe2L/tree/main/SRe2L
 </li>
 <li>
-    The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from [https://github.com/facebookresearch/moco](https://github.com/facebookresearch/moco).
+The code in the `/SCDD/imagenet_code/pretrain_moco` section is adapted from https://github.com/facebookresearch/moco
 </li>
 </ol>
