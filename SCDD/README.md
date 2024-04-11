@@ -39,7 +39,6 @@ Additionally, we have included our synthetic images on CIFAR-100. Please be pati
 
 The code has been tested with
 - Python 3.9, CUDA 12.2, PyTorch 2.0.1
-- Python 3.9, CUDA 12.2, PyTorch 2.1.0
 
 Please refer to [INSTALL](./source/install.md) for the installation details. 
 
@@ -56,24 +55,24 @@ In our paper, we used MoCo v2, MoCo v3, SwAV, and DINO as the self-supervised mo
 | DINO | [DINO](https://github.com/facebookresearch/dino) |
 
 ### Recover
-1. For ImageNet-1K -> Recover, `cd imagenet_code/recover`, then run:
+1. For ImageNet-1K -> recover data from a self-supervised ResNet-50 model, `cd imagenet_code/recover`, then run:
 ```bash
 python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc50" --pretrained "/your/pretrained_model.pth.tar" --syn-data-path './syn_data' --lr 0.1 --iteration 1000 --r-bn 0.01 --store-best-images --index-start 0 --index-end 50 
 ```
 
-2. For CIFAR-100 -> Recover, `cd cifar100_code/recover`, then run: 
+2. For CIFAR-100 -> recover data from a self-supervised ResNet-18 model, `cd cifar100_code/recover`, then run: 
 ```bash
 python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "recover_cifar100_resnet18_ipc50" --syn-data-path './syn_data' --lr 0.4 --iteration 1000 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 50 
 ```
 
 ### Relabel & Validation
 
-1. For ImageNet-1K -> Relabel, `cd imagenet_code/post_train`, then run: 
+1. For ImageNet-1K -> validate the relabeled synthetic data, `cd imagenet_code/post_train`, then run: 
 ```bash
 python train_kd.py --batch-size 64 --model resnet18 --teacher-model resnet18 --epochs 300 --cos --mix-type 'cutmix' --val-dir /your/path/imagenet/val --train-dir /your/synthesis_data_path --output-dir ./save 
 ```
 
-2. For CIFAR-100 -> Relabel, `cd cifar100_code/post_train`, then run: 
+2. For CIFAR-100 -> validate the relabeled synthetic data, `cd cifar100_code/post_train`, then run: 
 ```bash
 python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teacher-model resnet18 --teacher-model-dir '/your/path/resnet_18_ckpt.pth' --train-dir '/your/path/syn_data' --output-dir ./save 
 ```
@@ -85,12 +84,6 @@ Here is the table displaying the Top-1 validation accuracy in Relabel phase obta
 <img width=80% src="./source/performance.png"/>
 </div>
 
-<!-- | IPC | CIFAR-100 | Tiny-ImageNet | ImageNet-1K |
-|---|---|---|---|
-| 10 img/cls | - | 31.6 | 32.1 |
-| 50 img/cls | 53.4 | 45.9 | 53.1 |
-| 100 img/cls | - | - | 57.9 |
-| 200 img/cls | - | - | 63.5 |  -->
 
 Please find our hyper-parameters below. 
 <div align=center>
