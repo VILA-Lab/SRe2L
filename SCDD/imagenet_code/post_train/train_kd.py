@@ -69,8 +69,6 @@ def get_args():
     ## add for selection policy
     parser.add_argument('--teacher-model', type=str, default=None,
                         help='teacher model name')
-    parser.add_argument('--image-select-idx', type=int, default=-1,
-                        help='image select index, and use the index as the seed for random mask')
     parser.add_argument('--teacher-model-pretrained',type=str,default='',
                         help='dir of the pretrained model of teacher model, namely moco+cls')
     parser.add_argument('--base-model',type=str,default='resnet50',
