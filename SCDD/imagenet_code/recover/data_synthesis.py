@@ -187,7 +187,7 @@ def get_parser():
                         help='whether to store best images')
     """Optimization related flags"""
     parser.add_argument('--batch-size', type=int,
-                        default=100, help='number of images to optimize at the same time')
+                        default=50, help='number of images to optimize at the same time')
     parser.add_argument('--iteration', type=int, default=1000,
                         help='num of iterations to optimize the synthetic data')
     parser.add_argument('--lr', type=float, default=0.1,
@@ -197,10 +197,10 @@ def get_parser():
                         help='coefficient for BN feature distribution regularization')
     parser.add_argument('--first-bn-multiplier', type=float, default=10.,
                         help='additional multiplier on first bn layer of R_bn')
-    parser.add_argument('--tv-l2', type=float, default=0.0001,
+    parser.add_argument('--tv-l2', type=float, default=0.,
                         help='coefficient for total variation L2 loss')
     parser.add_argument('--l2-scale', type=float,
-                        default=0.00001, help='l2 loss on the image')
+                        default=0., help='l2 loss on the image')
     """Model related flags"""
     parser.add_argument('--arch-name', type=str, default='resnet18',
                         help='arch name from pretrained torchvision models')

@@ -27,11 +27,11 @@ def get_args():
     parser.add_argument('--batch-size', type=int,
                         default=1024, help='batch size')
     parser.add_argument('--gradient-accumulation-steps', type=int,
-                        default=2, help='gradient accumulation steps for small gpu memory')
+                        default=1, help='gradient accumulation steps for small gpu memory')
     parser.add_argument('--start-epoch', type=int,
                         default=0, help='start epoch')
     parser.add_argument('--epochs', type=int, default=300, help='total epoch')
-    parser.add_argument('-j', '--workers', default=16, type=int,
+    parser.add_argument('-j', '--workers', default=8, type=int,
                         help='number of data loading workers')
 
     parser.add_argument('--train-dir', type=str, default=None,
@@ -58,7 +58,7 @@ def get_args():
     parser.add_argument('--model', type=str,
                         default='resnet18', help='student model name')
     parser.add_argument('-T', '--temperature', type=float,
-                        default=3.0, help='temperature for distillation loss')
+                        default=20.0, help='temperature for distillation loss')
     parser.add_argument('--mix-type', default=None, type=str,
                         choices=['mixup', 'cutmix', None], help='mixup or cutmix or None')
     parser.add_argument('--mixup', type=float, default=0.8,

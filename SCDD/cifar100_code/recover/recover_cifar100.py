@@ -216,7 +216,7 @@ def main_syn(args, ipc_id):
     for p in model_teacher.parameters():
         p.requires_grad = False
 
-    if False:
+    if args.verifier:
         verifier_arch_path = 'your/path/mobilenetv2_cifar100/ckpt.pth'
 
         model_verifier = models.__dict__['mobilenet_v2'](num_classes=100)
@@ -260,10 +260,10 @@ def parse_args():
                         help='coefficient for BN feature distribution regularization')
     parser.add_argument('--first-bn-multiplier', type=float, default=10.,
                         help='additional multiplier on first bn layer of R_bn')
-    parser.add_argument('--tv-l2', type=float, default=0.0001,
+    parser.add_argument('--tv-l2', type=float, default=0.,
                         help='coefficient for total variation L2 loss')
     parser.add_argument('--l2-scale', type=float,
-                        default=0.00001, help='l2 loss on the image')
+                        default=0., help='l2 loss on the image')
     """Model related flags"""
     parser.add_argument('--arch-name', type=str, default='resnet18',
                         help='arch name from pretrained torchvision models')
@@ -277,8 +277,6 @@ def parse_args():
     parser.add_argument('--ipc-start', default=0, type=int)
     parser.add_argument('--ipc-end', default=1, type=int)
     args = parser.parse_args()
-
-    # os.environ["CUDA_VISIBLE_DEVICES"] = args.GPU_ID
 
     args.syn_data_path= os.path.join(args.syn_data_path, args.exp_name)
     return args
