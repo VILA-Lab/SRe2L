@@ -1,4 +1,4 @@
-# Self-supervised Compression Method for Dataset Distillation 
+# Self-supervised Compression for Dataset Distillation 
 
 :fire: The official implementation of "**A Good Compression Is All You Need for Dataset Distillation**" 
 
@@ -31,7 +31,7 @@ Below, we present our synthetic images generated on ImageNet-1K, which subjectiv
 Additionally, we have included our synthetic images on CIFAR-100. Please be patient if the GIF does not display immediately.
 
 <div align=center>
-<img style="width:80%" src="./source/concat_show_cifar.gif">
+<img style="width:140%" src="./source/concat_show_cifar.gif">
 </div>
 
 
@@ -81,13 +81,13 @@ python post_cifar100.py --epochs 200 --lr 0.005 --student-model resnet18 --teach
 Here is the table displaying the Top-1 validation accuracy in Relabel phase obtained from training with 10, 50, 100, and 200 synthetic images per class. Both SRe&sup2;L and our method utilize ResNet-18. For additional results, please refer to our paper. 
 
 <div align=center>
-<img width=80% src="./source/performance.png"/>
+<img width=95% src="./source/performance.png"/>
 </div>
 
 
 Please find our hyper-parameters below. 
 <div align=center>
-<img width=60% src="./source/parameter.png"/>
+<img width=55% src="./source/parameter.png"/>
 </div>
 
 
