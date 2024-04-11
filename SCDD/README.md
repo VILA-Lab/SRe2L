@@ -66,7 +66,7 @@ python data_synthesis.py --arch-name "resnet50" --exp-name "recover_resnet50_ipc
 python recover_cifar100.py --arch-name "resnet18" --arch-path "/your/path/model_ckpt.pth" --exp-name "recover_cifar100_resnet18_ipc50" --syn-data-path './syn_data' --lr 0.4 --iteration 1000 --r-bn 0.005 --store-best-images --ipc-start 0 --ipc-end 50 
 ```
 
-### Relabel
+### Relabel & Validation
 
 1. For ImageNet-1K -> Relabel, `cd imagenet_code/post_train`, then run: 
 ```bash
