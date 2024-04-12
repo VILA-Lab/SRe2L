@@ -1,6 +1,6 @@
 # Self-supervised Compression for Dataset Distillation 
 
-:fire: The official implementation of "**A Good Compression Is All You Need for Dataset Distillation**" 
+:fire: The official implementation of ["**A Good Compression Is All You Need for Dataset Distillation**"](https://arxiv.org/abs/2404.07976) 
 
 <div align=center>
 <img width=80% src="./source/vis_all.jpg"/>
