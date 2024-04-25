@@ -39,7 +39,7 @@ python data_synthesis.py --ipc-start 25 --ipc-end 50 \
   ...
 
 # GPU-2
-CUDA_VISIBLE_DEVICES=2
+CUDA_VISIBLE_DEVICES=2 \
 python data_synthesis.py --ipc-start 50 --ipc-end 75 \
   --arch-name "resnet18" \
   ...
