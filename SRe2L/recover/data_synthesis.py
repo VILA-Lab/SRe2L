@@ -156,8 +156,8 @@ def validate(input, target, model):
 
     print("Verifier accuracy: ", prec1.item())
 
-def main_syn(ipc_id):
 
+def parse_args():
     parser = argparse.ArgumentParser(
         "SRe2L: recover data from pre-trained model")
     """Data save flags"""
@@ -190,12 +190,19 @@ def main_syn(ipc_id):
                         help='whether to evaluate synthetic data with another model')
     parser.add_argument('--verifier-arch', type=str, default='mobilenet_v2',
                         help="arch name from torchvision models to act as a verifier")
+    """IPC (Image Per Class) flags"""
+    parser.add_argument("--ipc-start", default=0, type=int, help="start index of IPC")
+    parser.add_argument("--ipc-end", default=50, type=int, help="end index of IPC")
     args = parser.parse_args()
 
     args.syn_data_path= os.path.join(args.syn_data_path, args.exp_name)
     if not os.path.exists(args.syn_data_path):
         os.makedirs(args.syn_data_path)
 
+    return args
+
+
+def main_syn(ipc_id):
     model_teacher = models.__dict__[args.arch_name](pretrained=True)
     model_teacher = nn.DataParallel(model_teacher).cuda()
     model_teacher.eval()
@@ -213,6 +220,8 @@ def main_syn(ipc_id):
 
 
 if __name__ == '__main__':
-    for ipc_id in range(0,50):
+    args = parse_args()
+    # for ipc_id in range(0,50):
+    for ipc_id in range(args.ipc_start, args.ipc_end):
         print('ipc = ', ipc_id)
         main_syn(ipc_id)

@@ -21,13 +21,40 @@ python data_synthesis.py \
     --l2-scale 0 --tv-l2 0 --r-bn 0.01 \
     --verifier --store-best-images
 ```
+**[Suggestion for [multi-GPU training](https://github.com/VILA-Lab/SRe2L/issues/1#issuecomment-1649766741)]:**  We provide but do not recommend using DataParallel across multiple GPUs due to the delays incurred by parallelization.
+Instead, we also provide an `IPC (Image Per Class)` control setting and suggest using a single GPU to synthesize images under a specific `IPC` range.
+For instance, to synthesize a dataset of 100 IPC on 4 GPUs, you can maximize the utilization of each GPU by running the programs on each with a distinct `IPC` range, via executing the following commands separately on each GPU:
 
-## Usage
+```bash
+# GPU-0
+CUDA_VISIBLE_DEVICES=0 \
+python data_synthesis.py --ipc-start 0 --ipc-end 25 \
+  --arch-name "resnet18" \
+  ...
+
+# GPU-1
+CUDA_VISIBLE_DEVICES=1 \
+python data_synthesis.py --ipc-start 25 --ipc-end 50 \
+  --arch-name "resnet18" \
+  ...
+
+# GPU-2
+CUDA_VISIBLE_DEVICES=2
+python data_synthesis.py --ipc-start 50 --ipc-end 75 \
+  --arch-name "resnet18" \
+  ...
+
+# GPU-3
+CUDA_VISIBLE_DEVICES=3 \
+python data_synthesis.py --ipc-start 75 --ipc-end 100 \
+  --arch-name "resnet18" \
+  ...
+```
 
 ```
 usage: data_synthesis.py
 
-[-h] [--exp-name EXP_NAME] [--syn-data-path SYN_DATA_PATH] [--store-best-images] [--batch-size BATCH_SIZE] [--iteration ITERATION] [--lr LR] [--jitter JITTER] [--r-bn R_BN] [--first-bn-multiplier FIRST_BN_MULTIPLIER][--tv-l2 TV_L2] [--l2-scale L2_SCALE] [--arch-name ARCH_NAME] [--verifier] [--verifier-arch VERIFIER_ARCH]
+[-h] [--exp-name EXP_NAME] [--syn-data-path SYN_DATA_PATH] [--store-best-images] [--batch-size BATCH_SIZE] [--iteration ITERATION] [--lr LR] [--jitter JITTER] [--r-bn R_BN] [--first-bn-multiplier FIRST_BN_MULTIPLIER][--tv-l2 TV_L2] [--l2-scale L2_SCALE] [--arch-name ARCH_NAME] [--verifier] [--verifier-arch VERIFIER_ARCH] [--ipc-start IPC_START] [--ipc-end IPC_END]
 
 arguments:
   -h, --help            show this help message and exit
@@ -51,6 +78,9 @@ arguments:
   --verifier            whether to evaluate synthetic data with another model
   --verifier-arch VERIFIER_ARCH
                         arch name from torchvision models to act as a verifier
+  --ipc-start IPC_START
+                        start index of IPC
+  --ipc-end IPC_END     end index of IPC
 ```
 
 
