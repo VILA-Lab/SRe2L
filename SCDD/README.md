@@ -91,7 +91,7 @@ Please find our hyper-parameters below.
 </div>
 
 
-Please download our synthetic data of ImageNet-1K IPC50 using this [link]( https://drive.google.com/drive/folders/1VdqEIjohHMg3Kum77vU1-Q1uZzGJ9RVA?usp=sharing).
+Please download our synthetic data of ImageNet-1K IPC50 using this [link](https://drive.google.com/file/d/1uQgGPx36WkBH-qh6iTpx2H2Dn86qXRAR/view).
 
 
 ## Acknowledgments
