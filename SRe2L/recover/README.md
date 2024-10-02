@@ -24,7 +24,9 @@ python data_synthesis.py \
 
 ## Multi-GPU training (New Setting)
 **[Suggestion for [multi-GPU training](https://github.com/VILA-Lab/SRe2L/issues/1#issuecomment-1649766741)]:**
-[Xiaochen](https://github.com/SunnyHaze) has implemented a set of Multi-GPU training code for the recovery stage with `DistributedSampler` for SRe2L, without using `DDP` or `DP`. It allows for easy and efficient multi-GPU inference with custom `IPC (Image Per Class)` parameters. Please switch the working directory to `./multi_gpu` and run the `multi_gput_recover.sh` script in that directory.
+[Xiaochen Ma](https://github.com/SunnyHaze) has implemented a set of Multi-GPU training code for the recovery stage with `DistributedSampler` for SRe2L, without using `DDP` or `DP`. It allows for easy and efficient multi-GPU inference with custom `IPC (Image Per Class)` parameters. 
+
+Please switch the working directory to `./multi_gpu` and run the `multi_gput_recover.sh` script in that directory to start the multi-GPU training.
 
 ```bash
 base_dir="./recover_imagenet1k_resnet18_ipc50_iter4000"
@@ -107,6 +109,7 @@ optional arguments:
   --dist-backend DIST_BACKEND
                         distributed backend
 ```
+
 ## Multi-GPU training (Previous Setting)
 We provide but do not recommend using DataParallel across multiple GPUs due to the delays incurred by parallelization.
 Instead, we also provide an `IPC (Image Per Class)` control setting and suggest using a single GPU to synthesize images under a specific `IPC` range.
