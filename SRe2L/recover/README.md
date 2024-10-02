@@ -49,6 +49,9 @@ data_synthesis.py \
 > [!NOTE]\
 > You have to modify the CUDA related parameter to fit your own device.
 
+Here are help list for parameters:
+
+```bash
 usage: SRe2L: recover data from pre-trained model [-h] [--exp-name EXP_NAME]
                                                   [--syn-data-path SYN_DATA_PATH]
                                                   [--print_period PRINT_PERIOD]
@@ -103,7 +106,7 @@ optional arguments:
   --dist-url DIST_URL   url used to set up distributed training
   --dist-backend DIST_BACKEND
                         distributed backend
-
+```
 ## Multi-GPU training (Previous Setting)
 We provide but do not recommend using DataParallel across multiple GPUs due to the delays incurred by parallelization.
 Instead, we also provide an `IPC (Image Per Class)` control setting and suggest using a single GPU to synthesize images under a specific `IPC` range.
