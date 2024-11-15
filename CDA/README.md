@@ -1,7 +1,7 @@
-# Dataset Distillation in Large Data Era
+# Dataset Distillation via Curriculum Data Synthesis in Large Data Era
 
-Official PyTorch implementation of paper :
->[__"Dataset Distillation in Large Data Era"__](https://arxiv.org/abs/2311.18838)<br>
+Official PyTorch implementation of paper (TMLR):
+>[__"Dataset Distillation via Curriculum Data Synthesis in Large Data Era"__](https://openreview.net/forum?id=PlaZD2nGCl)<br>
 >[Zeyuan Yin](https://zeyuanyin.github.io), [Zhiqiang Shen](http://zhiqiangshen.com/)<br>
 >MBZUAI
 
@@ -23,9 +23,9 @@ Official PyTorch implementation of paper :
 
 ## Abstract
 
-Dataset distillation aims to generate a smaller but representative subset from a large dataset, which allows a model to be trained efficiently, meanwhile evaluating on the original testing data distribution to achieve decent performance. Many prior works have aimed to align with diverse aspects of the original datasets, such as matching the training weight trajectories, gradient, feature/BatchNorm distributions, etc.
-In this work, we show how to distill various large-scale datasets such as full ImageNet-1K/21K under a conventional input resolution of 224 $\times$ 224 to achieve the best accuracy over all previous approaches, including SRe<sup>2</sup>L, TESLA and MTT.
-To achieve this, we introduce a simple yet effective **C**urriculum **D**ata **A**ugmentation (**CDA**) during data synthesis that obtains the accuracy on large-scale ImageNet-1K and 21K with 63.2\% under IPC (Images Per Class) 50 and 36.1\% under IPC 20, respectively. Finally, we show that, by integrating all our enhancements together, the proposed model beats the current state-of-the-art by more than 4\% top-1 accuracy on ImageNet-1K and for the first time, reduces the gap to its full-data training counterpart to less than absolute 15\%. Moreover, this work represents the inaugural success in dataset distillation on larger-scale ImageNet-21K under the standard 224 $\times$ 224 resolution.
+Dataset distillation or condensation  aims to generate a smaller but representative subset from a large dataset, which allows a model to be trained more efficiently, meanwhile evaluating on the original testing data distribution to achieve decent performance. 
+Previous decoupled methods like SRe<sup>2</sup>L simply use a unified gradient update scheme for synthesizing data from Gaussian noise, while, we notice that the initial several update iterations will determine the final outline of synthesis, thus an improper gradient update strategy may dramatically affect the final generation quality. To address this, we introduce a simple yet effective _global-to-local_ gradient refinement approach enabled by curriculum data augmentation ($\texttt{CDA}$) during data synthesis. The proposed framework achieves the current published highest accuracy on both large-scale ImageNet-1K and 21K with 63.2\% under {IPC (Images Per Class) 50} and 36.1\% under IPC 20, using a regular input resolution of 224 $\times$ 224. 
+The proposed model outperforms the current state-of-the-art methods like SRe<sup>2</sup>L, TESLA, and MTT by more than 4\% Top-1 accuracy on ImageNet-1K/21K and for the first time, reduces the gap to its full-data training counterparts to less than absolute 15\%. Moreover, this work represents the inaugural success in dataset distillation on the larger-scale ImageNet-21K dataset under the standard 224 $\times$ 224 resolution. 
 
 ## Requirements
 
@@ -94,7 +94,7 @@ To achieve this, we introduce a simple yet effective **C**urriculum **D**ata **A
 
     It will take about 29 hours to recover the distilled ImageNet-1K with IPC50 on a single 4090 GPU.
 
-- ImgaNet-21K
+- ImageNet-21K
 
     ```bash
     python recover_cda_in21k.py \
@@ -147,9 +147,9 @@ You can download distilled data from [![Hugging Face Datasets](https://img.shiel
 
 ```
 @article{yin2023dataset,
-  title={Dataset Distillation in Large Data Era},
+  title={Dataset Distillation via Curriculum Data Synthesis in Large Data Era},
   author={Yin, Zeyuan and Shen, Zhiqiang},
-  journal={arXiv preprint arXiv:2311.18838},
-  year={2023}
+  journal={Transactions on Machine Learning Research},
+  year={2024}
 }
 ```
