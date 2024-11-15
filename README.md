@@ -4,7 +4,7 @@ _This is a collection of our work targeted at large-scale dataset distillation_.
 
 > [**SCDD**](./SCDD/) : __Self-supervised Compression Method for Dataset Distillation__ .
 
-> [**CDA**](./CDA/) : __Dataset Distillation in Large Data Era__,  arXiv:2311.18838.
+> [**CDA**](./CDA/) (```@TMLR'24```): __Dataset Distillation via Curriculum Data Synthesis in Large Data Era__.
 
 > [**SRe<sup>2</sup>L**](./SRe2L/) (```@NeurIPS'23 spotlight```): __*Squeeze*, *Recover* and *Relabel*: Dataset Condensation at ImageNet Scale From A New Perspective__.
 
@@ -12,10 +12,10 @@ _This is a collection of our work targeted at large-scale dataset distillation_.
 
 ```
 @article{yin2023dataset,
-  title={Dataset Distillation in Large Data Era},
+  title={Dataset Distillation via Curriculum Data Synthesis in Large Data Era},
   author={Yin, Zeyuan and Shen, Zhiqiang},
-  journal={arXiv preprint arXiv:2311.18838},
-  year={2023}
+  journal={Transactions on Machine Learning Research},
+  year={2024}
 }
 ```
 
