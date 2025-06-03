@@ -4,6 +4,7 @@ import random
 import warnings
 
 import torch
+import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 import torch.distributed as dist
 import torch.multiprocessing as mp
@@ -208,7 +209,7 @@ def main_worker(gpu, ngpus_per_node, args):
 def save(train_loader, model, dir_path, args):
     """Generate soft labels and save"""
     model.eval()
-    for batch_idx, (images, target, flip_status, coords_status) in enumerate(train_loader):
+    for batch_idx, (original_indices, images, target, flip_status, coords_status) in enumerate(train_loader):
         # print(images.shape) # [batch_size, 3, 224, 224]
         # print(flip_status.shape) # [batch_size,]
         # print(coords_status.shape) # [batch_size, 4]
@@ -219,7 +220,10 @@ def save(train_loader, model, dir_path, args):
         if args.use_fp16:
             output = output.half()
 
-        batch_config = [coords_status, flip_status, mix_index, mix_lam, mix_bbox, output.cpu()]
+        probs = F.softmax(output, dim=1)
+        entropy = -torch.sum(probs * torch.log(probs + 1e-9), dim=1)
+
+        batch_config = [coords_status, flip_status, mix_index, mix_lam, mix_bbox, output.cpu(), target.cpu(), entropy.cpu(), original_indices.cpu()]
         batch_config_path = os.path.join(dir_path, 'batch_{}.tar'.format(batch_idx))
         torch.save(batch_config, batch_config_path)
 
