@@ -215,6 +215,21 @@ def save(train_loader, model, dir_path, args):
         # print(coords_status.shape) # [batch_size, 4]
         images = images.cuda()
         images, mix_index, mix_lam, mix_bbox = mix_aug(images, args)
+        local_mix_indices_from_aug = mix_index # Original mix_index from mix_aug is batch-local
+        # Convert local mix indices to global dataset indices for saving
+        saved_mix_representation = None
+        if local_mix_indices_from_aug is not None:
+            # original_indices are global dataset indices for the current batch (typically CPU tensor).
+            # local_mix_indices_from_aug are batch-local indices (CPU tensor from mix_aug return).
+            # Ensure original_indices is on CPU if calculations are expected on CPU.
+            # However, indexing should work fine if devices match or one is CPU.
+            # For robustness, let's assume original_indices might be on GPU from loader, ensure CPU for this op if needed,
+            # but usually DataLoader provides CPU tensors unless explicitly pinned.
+            # Assuming original_indices is CPU here based on later .cpu() call when it's saved.
+            global_mix_indices = original_indices[local_mix_indices_from_aug]
+            saved_mix_representation = global_mix_indices # This will be a CPU tensor if inputs are CPU.
+        else:
+            saved_mix_representation = None
 
         output = model(images)
         if args.use_fp16:
@@ -223,7 +238,7 @@ def save(train_loader, model, dir_path, args):
         probs = F.softmax(output, dim=1)
         entropy = -torch.sum(probs * torch.log(probs + 1e-9), dim=1)
 
-        batch_config = [coords_status, flip_status, mix_index, mix_lam, mix_bbox, output.cpu(), target.cpu(), entropy.cpu(), original_indices.cpu()]
+        batch_config = [coords_status, flip_status, saved_mix_representation, mix_lam, mix_bbox, output.cpu(), target.cpu(), entropy.cpu(), original_indices.cpu()]
         batch_config_path = os.path.join(dir_path, 'batch_{}.tar'.format(batch_idx))
         torch.save(batch_config, batch_config_path)
 

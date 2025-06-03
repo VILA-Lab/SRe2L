@@ -95,10 +95,24 @@ def main():
                     # Let's assume `target_batch` contains the targets for the current batch,
                     # and `mix_index_batch` contains indices *within this batch* for the mix.
                     
-                    # Get the target label of the image that was mixed in
-                    target_of_mixed_image = target_batch[mix_index] # This assumes mix_index is an index within the current batch
-                                        
-                    is_correct = (predicted_label == original_target) or (predicted_label == target_of_mixed_image)
+                    # The 'mix_index' variable (from mix_index_batch[i]) is now a GLOBAL dataset index
+                    # and is a 0-dim tensor at this point (not None).
+                    global_mix_index_val = mix_index.item()
+
+                    # original_indices_batch is a tensor of global indices for the current batch samples.
+                    # target_batch contains labels for the current batch samples.
+                    original_indices_list = original_indices_batch.tolist() # Assumes original_indices_batch is CPU tensor
+
+                    if global_mix_index_val in original_indices_list:
+                        local_idx_for_mixed_image = original_indices_list.index(global_mix_index_val)
+                        target_of_mixed_image = target_batch[local_idx_for_mixed_image] # Assumes target_batch is CPU
+                        is_correct = (predicted_label == original_target) or (predicted_label == target_of_mixed_image)
+                    else:
+                        print(f"Warning: For sample with original_target {original_target.item()} (global id {original_indices_batch[i].item()}), " +
+                              f"its mixed component (global_mix_index {global_mix_index_val}) " +
+                              "was not found in the current batch's original_indices_batch. " +
+                              "Correctness for mixed component cannot be verified. Treating as incorrect.")
+                        is_correct = False
 
 
                 if not is_correct:
