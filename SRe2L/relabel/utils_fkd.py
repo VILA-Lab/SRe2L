@@ -2,6 +2,7 @@ import os
 
 import numpy as np
 import torch
+import torch.nn.functional as F
 import torch.distributed
 import torchvision
 from torchvision.transforms import functional as t_F
@@ -154,11 +155,12 @@ class ImageFolder_FKD_MIX(torchvision.datasets.ImageFolder):
         else:
             flip_status = None
             coords_status = None
+            sample_new = sample # Assign sample to sample_new if transform is None
 
         if self.target_transform is not None:
             target = self.target_transform(target)
 
-        return sample_new, target, flip_status, coords_status
+        return index, sample_new, target, flip_status, coords_status
 
     def load_batch_config(self, img_idx):
         """Use the `img_idx` to locate the `batch_idx`
@@ -255,3 +257,26 @@ def get_img2batch_idx_list(num_img = 50000, batch_size = 1024, seed=42, epochs=3
 
         img2batch_idx_list.append(img2batch_idx)
     return img2batch_idx_list
+
+
+def get_predicted_label(soft_labels):
+    """
+    Derives the predicted class index from soft labels (logits or probabilities).
+    Args:
+        soft_labels (torch.Tensor): A batch of soft labels. Shape: (batch_size, num_classes)
+    Returns:
+        torch.Tensor: Predicted class indices. Shape: (batch_size,)
+    """
+    return torch.argmax(soft_labels, dim=-1)
+
+def calculate_entropy(soft_labels):
+    """
+    Calculates entropy from soft labels (logits).
+    Args:
+        soft_labels (torch.Tensor): A batch of soft labels (logits). Shape: (batch_size, num_classes)
+    Returns:
+        torch.Tensor: Entropy for each sample. Shape: (batch_size,)
+    """
+    probs = F.softmax(soft_labels, dim=-1)
+    entropy = -torch.sum(probs * torch.log(probs + 1e-9), dim=-1) # Add epsilon for numerical stability
+    return entropy
